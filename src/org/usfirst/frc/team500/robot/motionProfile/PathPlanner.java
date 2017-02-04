@@ -1,11 +1,10 @@
 package org.usfirst.frc.team500.robot.motionProfile;
 
-import java.awt.Color;
-import java.awt.GraphicsEnvironment;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.usfirst.frc.team500.robot.Robot;
 import org.usfirst.frc.team500.robot.utils.Constants;
 
 
@@ -695,6 +694,8 @@ public class PathPlanner
 		
 		rightProfile = mergeToProfile(smoothRightVelocity, smoothRightPosition);
 		leftProfile = mergeToProfile(smoothLeftVelocity, smoothLeftPosition); 
+		
+		System.out.println("right profile" + Arrays.deepToString(rightProfile));
 	}
 	
 	/***
@@ -716,17 +717,18 @@ public class PathPlanner
 		double[][] rpm  = new double[feetPerSecond.length][feetPerSecond[1].length];
 		for (int i = 0; i < feetPerSecond.length ; i ++ ){
 			rpm[i][0] = feetPerSecond[i][0];
-			rpm[i][1] = (feetPerSecond[i][1] * 60) / (Constants.WHEEL_DIAMETER/12 * Math.PI);
+			rpm[i][1] = (feetPerSecond[i][1] * 60) / (Robot.bot.WHEEL_DIAMETER/12 * Math.PI);
 		}
 		return rpm;
 	}
+	
 	public double[][]RPMtoEncoderPosition(double[][] rpm){
 		double integral = 0;
 		double[][] encoderPosition = new double[rpm.length][rpm[1].length];
 		for (int i = 0; i < encoderPosition.length; i ++){
 			encoderPosition[i][0] = rpm[i][0];
-			integral += ((rpm[i][1] * 360)/(60*(1/0.1)));
-			System.out.println((rpm[i][1] * 360)/(60*(1/0.1)));
+			integral += ((rpm[i][1] * Robot.bot.COUNTS_PER_REV)/(60*(1/Robot.bot.LOOP_TIME)));
+			System.out.println((rpm[i][1] * Robot.bot.COUNTS_PER_REV)/(60*(1/Robot.bot.LOOP_TIME)));
 			encoderPosition[i][1] = integral;
 		}
 		return encoderPosition;
@@ -738,7 +740,7 @@ public class PathPlanner
 		for (int i = 0; i < profile.length; i ++){
 			profile[i][0] = position[i][1];
 			profile[i][1] = velocity[i][1];
-			profile[i][2] = velocity[i][0];
+			profile[i][2] = Robot.bot.LOOP_TIME * 1000;
 		}
 		return profile;
 	}

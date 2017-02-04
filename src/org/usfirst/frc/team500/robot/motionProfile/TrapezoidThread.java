@@ -40,7 +40,7 @@ public class TrapezoidThread implements Runnable{
 	public void run() {	
 		if(hasTrapTask) {
 				//start the motion profile(Teleop periodic)	
-			System.out.println("trapezoidthreah:run");
+		//	System.out.println("trapezoidthread:run");
 				if(leftProfile.getSetValue() != CANTalon.SetValueMotionProfile.Hold) 
 					leftProfile.control();
 				

@@ -42,6 +42,7 @@ public class OI {
 	
 	private static JoystickButton aPressed = new JoystickButton(joystick, 1);
 	private static JoystickButton bPressed = new JoystickButton(joystick, 2);
+	private static JoystickButton xPressed = new JoystickButton(joystick, 3);
 	private static JoystickButton safety1 = new JoystickButton(joystick, 5);
 	private static JoystickButton safety2 = new JoystickButton(joystick, 6);
 	
@@ -74,6 +75,9 @@ public class OI {
 	}
 	public static boolean bPressed(){
 		return bPressed.get();
+	}
+	public static boolean xPressed(){
+		return xPressed.get();
 	}
 	
 }

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team500.robot.commands;
 
+import org.usfirst.frc.team500.robot.Robot;
 import org.usfirst.frc.team500.robot.motionProfile.GeneratedMotionProfile;
 import org.usfirst.frc.team500.robot.motionProfile.PathPlanner;
 import org.usfirst.frc.team500.robot.subsystems.DrivetrainSubsystem;
@@ -11,18 +12,16 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class RunMotionProfileCommand extends Command {
-	double[][] leftProfile, rightProfile;
-    public RunMotionProfileCommand(double[][] waypoints, double maxTime) {
-    	PathPlanner planner = new PathPlanner(waypoints);
-    	planner.calculate(maxTime, Constants.ITP, ((double)Constants.WHEEL_BASE/12));
-    	this.leftProfile = planner.getLeftProfile();
-    	this.rightProfile = planner.getRightProfile();
+	PathPlanner planner;
+	public RunMotionProfileCommand(double[][] waypoints, double maxTime) {
+    	planner = new PathPlanner(waypoints);
+    	planner.calculate(maxTime, Robot.bot.LOOP_TIME, ((double)Robot.bot.WHEEL_BASE/12));
         requires(DrivetrainSubsystem.getInstance());
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	DrivetrainSubsystem.getInstance().runProfileLeftRight(rightProfile, leftProfile);
+    	DrivetrainSubsystem.getInstance().runProfileLeftRight(planner.getLeftProfile(), planner.getLeftProfile());
     }
 
     // Called repeatedly when this Command is scheduled to run

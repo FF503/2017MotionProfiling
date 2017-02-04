@@ -1,13 +1,11 @@
 package org.usfirst.frc.team500.robot.subsystems;
 
 import org.usfirst.frc.team500.robot.Robot;
-import org.usfirst.frc.team500.robot.RobotMap;
 import org.usfirst.frc.team500.robot.motionProfile.TrapezoidThread;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
-import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -26,7 +24,7 @@ public class DrivetrainSubsystem extends Subsystem {
 	
 	static CANTalon leftMaster, leftSlave, rightMaster, rightSlave;
 	private double talonLeftPos, talonRightPos, talonLeftRPM, talonRightRPM, rightSpeed, leftSpeed;
-	private long curTime, difTime, lastTime;         
+	private double curTime, difTime, lastTime;         
 	protected TrapezoidThread trapThread;
 	private static int currentProfileID;
 	public boolean profileHasFinished = false;
@@ -34,43 +32,44 @@ public class DrivetrainSubsystem extends Subsystem {
 	private boolean firstLogFileRun = true;
   
    public DrivetrainSubsystem() {
-   	
-   	System.out.println("constructing drive train");
-   	leftMaster = Robot.bot.getCANTalonObj(0);
-		rightMaster = Robot.bot.getCANTalonObj(1);
-		leftSlave = Robot.bot.getCANTalonObj(2);
+	   
+	   	System.out.println("constructing drive train");
+	   	leftMaster = Robot.bot.getCANTalonObj(0);
+		leftSlave = Robot.bot.getCANTalonObj(1);
+		rightMaster = Robot.bot.getCANTalonObj(2);
 		rightSlave = Robot.bot.getCANTalonObj(3);
 		
-		leftMaster.reverseSensor(false);
-		rightMaster.reverseSensor(true);
+		leftMaster.reverseSensor(Robot.bot.REVERSE_LEFT_SENSOR);
+		rightMaster.reverseSensor(Robot.bot.REVERSE_RIGHT_SENSOR);
 		
 		leftMaster.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		rightMaster.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		
-		leftMaster.configEncoderCodesPerRev(360);
-		rightMaster.configEncoderCodesPerRev(360);
+		leftMaster.configEncoderCodesPerRev(Robot.bot.COUNTS_PER_REV);
+		rightMaster.configEncoderCodesPerRev(Robot.bot.COUNTS_PER_REV);
 		
-		//leftMaster.setF(0);
-		leftMaster.setPID(0, 0, 0);
-		rightMaster.setPID(0, 0, 0);
-		leftSlave.setPID(0,0,0);
-		rightSlave.setPID(0, 0, 0);
-		leftMaster.setF(1.50220264);
-		rightMaster.setF(1.51780415);
+		setPID(Robot.bot.DRIVE_P, Robot.bot.DRIVE_I, Robot.bot.DRIVE_D);
+		leftMaster.setF(Robot.bot.LEFT_DRIVE_F);
+		rightMaster.setF(Robot.bot.RIGHT_DRIVE_F);
 		
 		//rightMaster.setF(0);
-		rightMaster.reverseOutput(true);
-		leftMaster.reverseOutput(false);
+		leftMaster.reverseOutput(Robot.bot.REVERSE_LEFT_OUTPUT);
+		rightMaster.reverseOutput(Robot.bot.REVERSE_RIGHT_OUTPUT);
 		
 		leftSlave.changeControlMode(TalonControlMode.Follower);
-   	rightSlave.changeControlMode(TalonControlMode.Follower);
-   	leftSlave.set(RobotMap.ProgrammingBot.leftMasterID);
-   	rightSlave.set(RobotMap.ProgrammingBot.rightMasterID);
-		
-   	rightMaster.enableBrakeMode(false);
-   	leftMaster.enableBrakeMode(false);	
-   	    	
-   	trapThread = new TrapezoidThread(leftMaster, rightMaster);	
+	   	rightSlave.changeControlMode(TalonControlMode.Follower);
+	   	leftSlave.set(Robot.bot.leftMasterID);
+	   	rightSlave.set(Robot.bot.rightMasterID);
+			
+	   	rightMaster.enableBrakeMode(true);
+	   	leftMaster.enableBrakeMode(true);	
+	   	    	
+	   	trapThread = new TrapezoidThread(leftMaster, rightMaster);	
+   }
+   
+   public void setPID(double p, double i, double d){
+		leftMaster.setPID(p, i, d);
+		rightMaster.setPID(p, i, d);
    }
    
    private void waitForTrapezoidalFinish() {
@@ -94,8 +93,8 @@ public class DrivetrainSubsystem extends Subsystem {
    }
    
    public void runProfileLeftRight(double[][] leftPoints, double[][] rightPoints){
-   	System.out.println("runPofileLeftRight");
-   	profileHasFinished = false;
+   		System.out.println("runPofileLeftRight");
+   		profileHasFinished = false;
 		currentProfileID++;
 		startTrapezoidControl(leftPoints,rightPoints,currentProfileID);
 		waitForTrapezoidalFinish();
@@ -232,15 +231,15 @@ public class DrivetrainSubsystem extends Subsystem {
        setMotorOutputs(leftValue, rightValue, sensitivity);
    }    
    
-   public void populateLog(long startTime){
+   public void populateLog(double startTime){
    	if (firstLogFileRun){
    		lastTime = startTime;
    		firstLogFileRun = false;
    	}
-   	curTime = System.currentTimeMillis();
+   	curTime = Timer.getFPGATimestamp();
    	difTime = curTime - lastTime;
    	
-   	if (difTime >= 100){
+   	if (difTime >= .1){
        	talonLeftPos = leftMaster.getEncPosition();
    		talonLeftRPM = leftMaster.getSpeed();
    		talonRightPos = rightMaster.getEncPosition();

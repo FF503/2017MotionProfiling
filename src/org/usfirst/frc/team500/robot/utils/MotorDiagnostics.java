@@ -1,16 +1,7 @@
 package org.usfirst.frc.team500.robot.utils;
 
-import org.usfirst.frc.team500.robot.utils.UI;
 import org.usfirst.frc.team500.robot.utils.Constants.motorTests;
 import org.usfirst.frc.team500.robot.utils.Constants.teleopModes;
-
-//import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-//import org.usfirst.frc.team5422.DSIO.DSIO;
-//import org.usfirst.frc.team5422.DSIO.SmartDashboardChooser;
-//import org.usfirst.frc.team5422.controller.StrongholdRobot;
-//import org.usfirst.frc.team5422.navigator.Driver;
 
 
 /**

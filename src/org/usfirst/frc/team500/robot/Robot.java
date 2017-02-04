@@ -19,10 +19,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 public class Robot extends IterativeRobot {
 
 	// static final DriveSubsystem drive = new DriveSubsystem();
-	public static OI oi;
-	public static RobotHardware bot = null;
-	public static Timer timer;
-	private long startTime;
+	public static RobotHardwareProgrammingBot bot = null;
+	private static double startTime;
 
    public static diagnosticPOSTOptions diagnosticTestSelected;
 
@@ -38,7 +36,6 @@ public class Robot extends IterativeRobot {
 		bot = new RobotHardwareProgrammingBot();
 		bot.initialize();
 		OI.initialize();
-		timer = new Timer();
 	}
  
 	/**
@@ -79,11 +76,9 @@ public class Robot extends IterativeRobot {
 		 */
 
 		// schedule the autonomous command (example)\
-		startTime = System.currentTimeMillis();
-		double[][] firstPoints = {{0,13.5},{5,13.5},{8,13.5}};
-		RunMotionProfileCommand firstCommand = new RunMotionProfileCommand(firstPoints,8);
-		firstCommand.start();
-		
+		startTime = Timer.getFPGATimestamp();
+		double[][] firstPoints = {{0, 13.5},{5, 13.5},{8, 13.5}};
+		(new RunMotionProfileCommand(firstPoints, 1.8)).start();
 	}
 
 	/**
@@ -103,7 +98,7 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		DrivetrainSubsystem.getInstance().percentVoltageMode();
     	DrivetrainSubsystem.getInstance().resetEncoders();
-    	startTime = System.currentTimeMillis();
+    	startTime = Timer.getFPGATimestamp();
     	(new ArcadeDriveCommand()).start();
     	
 	}
