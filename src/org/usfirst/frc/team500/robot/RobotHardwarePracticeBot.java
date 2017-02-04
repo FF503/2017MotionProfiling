@@ -23,8 +23,8 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final double DRIVE_P = 0;
 	public final double DRIVE_I = 0;
 	public final double DRIVE_D = 0;
-	public final double LEFT_DRIVE_F = 0;
-	public final double RIGHT_DRIVE_F = 0;
+	public final double LEFT_DRIVE_F = 1;//0.1040480065;
+	public final double RIGHT_DRIVE_F = 1;//0.101528384;
 	
 	public final boolean REVERSE_LEFT_SENSOR = true;
 	public final boolean REVERSE_RIGHT_SENSOR = false;
