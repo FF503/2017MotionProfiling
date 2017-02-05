@@ -77,8 +77,9 @@ public class Robot extends IterativeRobot {
 
 		// schedule the autonomous command (example)\
 		startTime = Timer.getFPGATimestamp();
-		double[][] firstPoints = {{0, 13.5},{5, 13.5},{8, 13.5}};
-		(new RunMotionProfileCommand(firstPoints, 1.8)).start();
+		double[][] centerPinCenterStart = {{0, 13.5},{5, 13.5},{8, 13.5}};
+		double[][] leftPinLeftStart = {{2,21.5},{6,21.5},{10.5,17}};
+		(new RunMotionProfileCommand(leftPinLeftStart, 3)).start();
 	}
 
 	/**

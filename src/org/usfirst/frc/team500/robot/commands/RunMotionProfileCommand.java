@@ -21,7 +21,7 @@ public class RunMotionProfileCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	DrivetrainSubsystem.getInstance().runProfileLeftRight(planner.getLeftProfile(), planner.getLeftProfile());
+    	DrivetrainSubsystem.getInstance().runProfileLeftRight(planner.getLeftProfile(), planner.getRightProfile());
     }
 
     // Called repeatedly when this Command is scheduled to run
