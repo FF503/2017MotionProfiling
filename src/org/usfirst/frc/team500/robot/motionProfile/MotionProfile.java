@@ -39,8 +39,8 @@ public class MotionProfile {
 		profilePoints = new double[1][1];
 		profilePoints[0][0] = 0;
 		
-		this.talon.changeMotionControlFramePeriod(5);
-		notifer.startPeriodic(0.005);
+		this.talon.changeMotionControlFramePeriod(Robot.bot.LOOP_TIME * 500); // was 5
+		notifer.startPeriodic(Robot.bot.LOOP_TIME/2); //was 0.0005
 		
 	}
 	
