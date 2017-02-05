@@ -28,8 +28,8 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	
 	public final boolean REVERSE_LEFT_SENSOR = true;
 	public final boolean REVERSE_RIGHT_SENSOR = false;
-	public final boolean REVERSE_LEFT_OUTPUT = true;
-	public final boolean REVERSE_RIGHT_OUTPUT = false;
+	public final boolean REVERSE_LEFT_OUTPUT = false;
+	public final boolean REVERSE_RIGHT_OUTPUT = true;
 	
 	@Override
 	public void initialize(){

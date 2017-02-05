@@ -1,5 +1,7 @@
 package org.usfirst.frc.team500.robot.motionProfile;
 
+import org.usfirst.frc.team500.robot.Robot;
+
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.Notifier;
@@ -32,7 +34,7 @@ public class MotionProfile {
 	
 	public MotionProfile(CANTalon talon) {
 		this.talon = talon;
-		this.talon.configEncoderCodesPerRev(360);
+		this.talon.configEncoderCodesPerRev(Robot.bot.COUNTS_PER_REV);
 	
 		profilePoints = new double[1][1];
 		profilePoints[0][0] = 0;
