@@ -33,8 +33,8 @@ public class MotionProfile {
 	public MotionProfile(CANTalon talon) {
 		this.talon = talon;
 		
-		this.talon.changeMotionControlFramePeriod(5);
-		notifer.startPeriodic(.005);	
+		this.talon.changeMotionControlFramePeriod((int)(Robot.bot.CYCLE_TIME*500)); //5	
+                notifer.startPeriodic(Robot.bot.CYCLE_TIME/2.0); //.005	
 	}
 	
 	public void setProfile(double [][] points) {
