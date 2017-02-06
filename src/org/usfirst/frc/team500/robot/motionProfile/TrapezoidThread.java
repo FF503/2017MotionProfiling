@@ -14,15 +14,13 @@ public class TrapezoidThread implements Runnable{
 	private double[][] leftPoints;
 	private double[][] rightPoints;	
 	
-	private boolean hasTrapTask = false;
+	private boolean startTrap = false;
 	
 	private Notifier trapLoop;
 	
 	private MotionProfile leftProfile;
 	private MotionProfile rightProfile;
 	
-	//network table stuff
-	public NetworkTable trapTable = NetworkTable.getTable("Trapezoid");
 	private int id;
 	private String status = "";
 
@@ -38,42 +36,24 @@ public class TrapezoidThread implements Runnable{
 	}
 	
 	public void run() {	
-		if(hasTrapTask) {
-				//start the motion profile(Teleop periodic)	
-		//	System.out.println("trapezoidthread:run");
-				if(leftProfile.getSetValue() != CANTalon.SetValueMotionProfile.Hold) 
-					leftProfile.control();
-				
-				if(rightProfile.getSetValue() != CANTalon.SetValueMotionProfile.Hold) 
-					rightProfile.control();
-					
-				if(leftProfile.getSetValue() != CANTalon.SetValueMotionProfile.Hold) 
-					leftProfile.startMotionProfile();
-				
-				if(rightProfile.getSetValue() != CANTalon.SetValueMotionProfile.Hold) 
-					rightProfile.startMotionProfile();
+		if(startTrap) {
+			//	System.out.println("trapezoidthread: run");
+
+			leftProfile.control();
+			rightProfile.control();
 			
-				CANTalon.SetValueMotionProfile setOutputLeft = leftProfile.getSetValue();
-				CANTalon.SetValueMotionProfile setOutputRight = rightProfile.getSetValue();
-							
-				leftTalon.set(setOutputLeft.value);
-				rightTalon.set(setOutputRight.value);
+			//inside control loop
+//			leftTalon.set(leftProfile.getSetValue().value);
+//			rightTalon.set(rightProfile.getSetValue().value);
 		
-				
-			if((leftProfile.getSetValue() == CANTalon.SetValueMotionProfile.Hold) && (rightProfile.getSetValue() == CANTalon.SetValueMotionProfile.Hold)) {
-					hasTrapTask = false;
-					leftProfile.stopMotionProfile();
-					rightProfile.stopMotionProfile();
+			if((leftProfile.getState() == 3) && (rightProfile.getState() == 3)) {
+					startTrap = false;
 					resetTrapezoid();
 					status = "finished";
 			}
-			
 			else {
 				status = "running";
-			}
-			
-			trapTable.putString("Trap Status", status);
-			trapTable.putNumber("Trap ID", id);
+			}			
 		}
 	}
 	
@@ -86,28 +66,24 @@ public class TrapezoidThread implements Runnable{
 		this.id = id;
 		
 		status = "initialized";
-		trapTable.putString("Trap Status", status);
-		trapTable.putNumber("Trap ID", id);
 		
 		resetTrapezoid();
 		initializeTalons();		
 		setProfiles();
 	
-		hasTrapTask = true;
+		leftProfile.startMotionProfile();
+		rightProfile.startMotionProfile();
+		
+		startTrap = true;
 		
 		System.out.println("trap activated. ID: " + id);
 	}
 
 	private void setProfiles() {
 		System.out.println("set profiles");
-		//leftExample.setProfile(TrapezoidControl.motionProfileUtility(leftRotations, leftVel, leftTalon.getEncPosition()));
-		//rightExample.setProfile(TrapezoidControl.motionProfileUtility(rightRotations, rightVel, rightTalon.getEncPosition()));
 		leftProfile.setProfile(leftPoints);
 		rightProfile.setProfile(rightPoints);
-		
 	}
-	
-	
 	
 	private void initializeTalons() {	
 		System.out.println("initialize talons");

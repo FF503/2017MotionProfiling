@@ -1,9 +1,8 @@
 package org.usfirst.frc.team500.robot.motionProfile;
 
-import org.usfirst.frc.team500.robot.Robot;
-
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
+
 import edu.wpi.first.wpilibj.Notifier;
 
 public class MotionProfile {
@@ -15,7 +14,6 @@ public class MotionProfile {
 	//state machine stuff
 	private int state = 0;
 	private int loopTimeout = -1;
-	private boolean start = false;
 	private CANTalon.SetValueMotionProfile setValue = CANTalon.SetValueMotionProfile.Disable;
 	
 	//used to maintain timing
@@ -23,25 +21,20 @@ public class MotionProfile {
 	private static final int kNumLoopsTimeout = 10;
 	
 	//nested class for thread which continually pushes points to MPB
-	class PeriodicRunnable implements java.lang.Runnable {
+	private class PeriodicRunnable implements Runnable {
 	    public void run() {
 	    	talon.processMotionProfileBuffer();    
 	    }
 	}
 	
-	Notifier notifer = new Notifier(new PeriodicRunnable());
+	private Notifier notifer = new Notifier(new PeriodicRunnable());
 
 	
 	public MotionProfile(CANTalon talon) {
 		this.talon = talon;
-		this.talon.configEncoderCodesPerRev(Robot.bot.COUNTS_PER_REV);
-	
-		profilePoints = new double[1][1];
-		profilePoints[0][0] = 0;
 		
-		this.talon.changeMotionControlFramePeriod(Robot.bot.LOOP_TIME * 500); // was 5
-		notifer.startPeriodic(Robot.bot.LOOP_TIME/2); //was 0.0005
-		
+		this.talon.changeMotionControlFramePeriod(5);
+		notifer.startPeriodic(.005);	
 	}
 	
 	public void setProfile(double [][] points) {
@@ -51,43 +44,41 @@ public class MotionProfile {
 	public void reset() {
 		talon.clearMotionProfileTrajectories();
 		setValue = CANTalon.SetValueMotionProfile.Disable;
-		state = 0;
+		state = -1;
 		loopTimeout = -1;
-		start = false;
 	}
-
 	
+	public void startMotionProfile(){
+		state = 0;
+	}
+	
+	public int getState(){
+		return state;
+	}
+	
+	//Repeated control loop that determines when to execute profile
 	public void control() {	
 		talon.getMotionProfileStatus(status);
 
-		if (loopTimeout < 0) {
-			//do nothing
-		}
-		 
-		else {
-		
-		//	if (_loopTimeout == 0) 
-				//Instrumentation.OnNoProgress();
-			if(loopTimeout != 0) 
-				loopTimeout--;	
+		if (loopTimeout > 0) {
+			loopTimeout--;
 		}
 		
 		if (talon.getControlMode() != TalonControlMode.MotionProfile) {
-			state = 0;
+			state = -1;
 			loopTimeout = -1;
-		} 
-		
+		} 	
 		else {
 			//enter state machine
 			switch (state) {
+				case -1:
+					setValue = CANTalon.SetValueMotionProfile.Disable;
+					break;
 				case 0:
-					if (start) {
-						start = false;
-						setValue = CANTalon.SetValueMotionProfile.Disable;
-						startFilling();
-						state = 1;
-						loopTimeout = kNumLoopsTimeout;
-					}
+					setValue = CANTalon.SetValueMotionProfile.Disable;
+					startFilling();
+					state = 1;
+					loopTimeout = kNumLoopsTimeout;
 					break;
 				case 1:
 					if (status.btmBufferCnt > kMinPointsInTalon) {
@@ -97,29 +88,24 @@ public class MotionProfile {
 					}
 					break;
 				case 2:
-					
 					if (status.isUnderrun == false) {
 						loopTimeout = kNumLoopsTimeout;
 					}
-				
+
 					if (status.activePointValid && status.activePoint.isLastPoint) {
 						setValue = CANTalon.SetValueMotionProfile.Hold;
-						state = 0;
+						state = 3;
 						loopTimeout = -1;
 					}
 					break;
 			}
 		}
-
+		talon.set(setValue.value);
 	}
-	
+
 	private void startFilling() {
-		startFilling(profilePoints, profilePoints.length);
-	}
-
-	private void startFilling(double[][] profile, int totalCnt) {
 		CANTalon.TrajectoryPoint point = new CANTalon.TrajectoryPoint();
-		System.out.println("total length:" + totalCnt);
+		
 		if (status.hasUnderrun) {
 			talon.clearMotionProfileHasUnderrun();
 		}
@@ -127,26 +113,17 @@ public class MotionProfile {
 		talon.clearMotionProfileTrajectories();
 
 	
-		for (int i = 0; i < totalCnt; ++i) {
-			point.position = profile[i][0];
-			point.velocity = profile[i][1];
-			point.timeDurMs = (int) profile[i][2];
+		for (int i = 0; i < profilePoints.length; ++i) {
+			point.position = profilePoints[i][0];
+			point.velocity = profilePoints[i][1];
+			point.timeDurMs = (int) profilePoints[i][2];
 			point.profileSlotSelect = 0; 
 			point.velocityOnly = false; 
 										
-			/**WE DO NOT USE ZEROPOS, because we do not want to continually reset encoders**/
-
-			point.isLastPoint = (i + 1) == totalCnt;
+			/*WE DO NOT USE ZEROPOS, because we do not want to continually reset encoders*/
+			point.isLastPoint = ((i + 1) == profilePoints.length);
 			talon.pushMotionProfileTrajectory(point);
 		}
-	}
-
-	public void startMotionProfile() {
-		start = true;
-	}
-	
-	public void stopMotionProfile() {
-		start = false;
 	}
 	
 	public CANTalon.SetValueMotionProfile getSetValue() {

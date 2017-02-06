@@ -83,8 +83,4 @@ public abstract class RobotHardware {
 	{
 		dummyBot = r;
 	}
-	
-	public class Constants{
-		
-	}
 }

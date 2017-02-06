@@ -1,51 +1,32 @@
 package org.usfirst.frc.team500.robot.utils;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team500.robot.utils.Constants.*;
-
-import edu.wpi.first.wpilibj.smartdashboard.*;
-
-//import org.usfirst.frc.team5422.utils.StrongholdConstants.defenseTypeOptions;
-//import org.usfirst.frc.team5422.utils.StrongholdConstants.endOptions;
-//import org.usfirst.frc.team5422.utils.StrongholdConstants.shootOptions;
-//import org.usfirst.frc.team5422.utils.StrongholdConstants.startPositionOptions;
-//import org.usfirst.frc.team5422.utils.StrongholdConstants.autonomousModeOptions;
-//import org.usfirst.frc.team5422.utils.StrongholdConstants.teleopModes;
-//import org.usfirst.frc.team5422.utils.StrongholdRobotConfigurationManager;
-//import org.usfirst.frc.team5422.utils.StrongholdConstants.motorTests;
-/*
- * 
- * 
- * 
- */
 
 
 public class SmartDashboardChooser {
-    public static SendableChooser defenseChooser, shootChooser, allianceChooser, autonomousModeChooser, startPositionChooser;
-    public static SendableChooser testChooser, testMotorChooser, modeChooser;
+    public SendableChooser defenseChooser, shootChooser, allianceChooser, autonomousModeChooser, startPositionChooser, testChooser, modeChooser;
 
-    public SmartDashboardChooser() {
+    private SmartDashboardChooser() {
 		//create choosers
-
-    	//Create start position chooser
         startPositionChooser = new SendableChooser();
-    	//create defense chooser
     	defenseChooser = new SendableChooser();
-        //Create shoot chooser
         shootChooser = new SendableChooser();
-        //Create alliance selector
         allianceChooser = new SendableChooser();
-        //Create subsystem test selector
         testChooser = new SendableChooser();        
-        //create autonomous mode chooser
         autonomousModeChooser = new SendableChooser();
-        //create test motor chooser
-        testMotorChooser = new SendableChooser();
-        //create modeChooser
         modeChooser = new SendableChooser();
+        
+        initChoosers();
 	}
 	
+    private static SmartDashboardChooser chooser = new SmartDashboardChooser();
+    
+    public static SmartDashboardChooser getChooser(){
+    	return chooser;
+    }
+    
 	public void initChoosers() {
 
 		if (defenseChooser == null) System.out.println("say error in initializing choosers");
@@ -69,8 +50,8 @@ public class SmartDashboardChooser {
 //        shootChooser.addObject("Stay in place.", shootOptions.NONE);
         SmartDashboard.putData("Shoot chooser", shootChooser);
 
-        allianceChooser.addDefault("Red", Constants.alliance.RED);
-        allianceChooser.addObject("Blue", Constants.alliance.BLUE);
+        allianceChooser.addDefault("Red", alliance.RED);
+        allianceChooser.addObject("Blue", alliance.BLUE);
         SmartDashboard.putData("Alliance Chooser", allianceChooser);
 
         //autonomousModeChooser.addObject("Reach AND Cross Only", autonomousModeOptions.REACH_N_CROSS);
@@ -106,33 +87,117 @@ public class SmartDashboardChooser {
 	}	
 
 	public void testInitChoosers() {
-        testChooser.addObject("(0) Test Gyro", Constants.diagnosticPOSTOptions.TEST_GYRO);
-        testChooser.addObject("(1) Test Ultrasonic", Constants.diagnosticPOSTOptions.TEST_ULTRASONIC);
-        testChooser.addObject("(2) Test Infrared", Constants.diagnosticPOSTOptions.TEST_IR);
-        testChooser.addObject("(3) Test Left Talon", Constants.diagnosticPOSTOptions.TEST_TALON_LEFT_MASTER);
-        testChooser.addObject("(4) Test Right Talon", Constants.diagnosticPOSTOptions.TEST_TALON_RIGHT_MASTER);
-        testChooser.addObject("(5) Test Drive", Constants.diagnosticPOSTOptions.TEST_CHASSIS_DRIVE);
-        testChooser.addObject("(6) Test Shooter", Constants.diagnosticPOSTOptions.TEST_SHOOTER);
-        testChooser.addObject("(7) Test Grappler", Constants.diagnosticPOSTOptions.TEST_GRAPPLER);
-        testChooser.addObject("(8) Test Alignment", Constants.diagnosticPOSTOptions.TEST_ALIGN_TO_CASTLE);
-        testChooser.addObject("(9) Test Lift", Constants.diagnosticPOSTOptions.TEST_LIFTER);
-        testChooser.addObject("(10) Test Motion Profile", Constants.diagnosticPOSTOptions.TEST_MOTION_PROFILE);
-        testChooser.addObject("(11) Test Global Positioning", Constants.diagnosticPOSTOptions.TEST_GLOBAL_POSITIONING);
-        testChooser.addObject("(12) Test With Joystick", Constants.diagnosticPOSTOptions.TEST_JOYSTICK);
-        testChooser.addDefault("(-1) Do Nothing", Constants.diagnosticPOSTOptions.TEST_NONE);
+        testChooser.addObject("(0) Test Gyro", diagnosticPOSTOptions.TEST_GYRO);
+        testChooser.addObject("(1) Test Ultrasonic", diagnosticPOSTOptions.TEST_ULTRASONIC);
+        testChooser.addObject("(2) Test Infrared", diagnosticPOSTOptions.TEST_IR);
+        testChooser.addObject("(3) Test Left Talon", diagnosticPOSTOptions.TEST_TALON_LEFT_MASTER);
+        testChooser.addObject("(4) Test Right Talon", diagnosticPOSTOptions.TEST_TALON_RIGHT_MASTER);
+        testChooser.addObject("(5) Test Drive", diagnosticPOSTOptions.TEST_CHASSIS_DRIVE);
+        testChooser.addObject("(6) Test Shooter", diagnosticPOSTOptions.TEST_SHOOTER);
+        testChooser.addObject("(7) Test Grappler", diagnosticPOSTOptions.TEST_GRAPPLER);
+        testChooser.addObject("(8) Test Alignment", diagnosticPOSTOptions.TEST_ALIGN_TO_CASTLE);
+        testChooser.addObject("(9) Test Lift", diagnosticPOSTOptions.TEST_LIFTER);
+        testChooser.addObject("(10) Test Motion Profile", diagnosticPOSTOptions.TEST_MOTION_PROFILE);
+        testChooser.addObject("(11) Test Global Positioning", diagnosticPOSTOptions.TEST_GLOBAL_POSITIONING);
+        testChooser.addObject("(12) Test With Joystick", diagnosticPOSTOptions.TEST_JOYSTICK);
+        testChooser.addDefault("(-1) Do Nothing", diagnosticPOSTOptions.TEST_NONE);
+        testChooser.addObject("(0) Test Actuator", motorTests.TEST_ACTUATOR);
+        testChooser.addObject("(1) Test Left Shooter", motorTests.TEST_LEFT_SHOOTER);
+        testChooser.addObject("(2) Test Right Shooter", motorTests.TEST_RIGHT_SHOOTER);
+        testChooser.addObject("(3) Test Drive Left Master", motorTests.TEST_DRIVE_LEFT_MASTER);
+        testChooser.addObject("(4) Test Drive Right Master", motorTests.TEST_DRIVE_RIGHT_MASTER);
+        testChooser.addObject("(5) Test Drive Left Slave", motorTests.TEST_DRIVE_LEFT_SLAVE);
+        testChooser.addObject("(6) Test Drive Right Slave", motorTests.TEST_DRIVE_RIGHT_SLAVE);
         SmartDashboard.putData("Test Init Chooser", testChooser);
 	}
+	
+	public enum startPositionOptions {
+		FRONT_OF_DEFENSE_1_LOW_BAR,
+		FRONT_OF_DEFENSE_2,
+		FRONT_OF_DEFENSE_3,
+		FRONT_OF_DEFENSE_4,
+		FRONT_OF_DEFENSE_5,
+		NONE
+	}
+	
+	public enum diagnosticPOSTOptions {
+		TEST_GYRO, 
+		TEST_ULTRASONIC, 
+		TEST_IR,
+		TEST_TALON_LEFT_MASTER,
+		TEST_TALON_RIGHT_MASTER,
+		TEST_CHASSIS_DRIVE,
+		TEST_SHOOTER,
+		TEST_GRAPPLER,
+		TEST_ALIGN_TO_CASTLE,
+		TEST_LIFTER,
+		TEST_MOTION_PROFILE, 
+		TEST_GLOBAL_POSITIONING,
+		TEST_JOYSTICK,
+		TEST_NONE
+	}
 
-    public void initTestMotorChooser() {
-        testMotorChooser.addObject("(0) Test Actuator", motorTests.TEST_ACTUATOR);
-        testMotorChooser.addObject("(1) Test Left Shooter", motorTests.TEST_LEFT_SHOOTER);
-        testMotorChooser.addObject("(2) Test Right Shooter", motorTests.TEST_RIGHT_SHOOTER);
-        testMotorChooser.addObject("(3) Test Drive Left Master", motorTests.TEST_DRIVE_LEFT_MASTER);
-        testMotorChooser.addObject("(4) Test Drive Right Master", motorTests.TEST_DRIVE_RIGHT_MASTER);
-        testMotorChooser.addObject("(5) Test Drive Left Slave", motorTests.TEST_DRIVE_LEFT_SLAVE);
-        testMotorChooser.addObject("(6) Test Drive Right Slave", motorTests.TEST_DRIVE_RIGHT_SLAVE);
-        testChooser.addDefault("(-1) Do Nothing", motorTests.TEST_NONE);
-        SmartDashboard.putData("Motor Test Chooser", testMotorChooser);
-    }
+	public enum shootHeightOptions {
+		HIGH,
+		LOW,
+		NONE
+	}
 
+	public enum shootOptions {
+		HIGH_LEFT,
+		HIGH_RIGHT,
+		HIGH_CENTER,
+		LOW_LEFT,
+		LOW_RIGHT,
+		NONE
+	}
+	
+	public enum defenseTypeOptions {
+		LOW_BAR,
+		PORTCULLIS,
+		CHIVAL_DE_FRISE,
+		MOAT,
+		RAMPARTS,
+		DRAWBRIDGE,
+		SALLYPORT,
+		ROCK_WALL,
+		ROUGH_TERRAIN,
+		NONE
+	}
+	
+	public enum endOptions {
+		TELEOP_STARTING_POSITION,
+		NONE
+	}
+	
+	public enum Speed {
+		SLOW, MEDIUM, FAST
+	}
+
+	public enum alliance {
+		RED, BLUE
+	}
+
+	public enum autonomousModeOptions {
+		REACH_N_CROSS,
+		REACH_N_CROSS_N_SHOOT,
+		REACH,
+		NONE
+	}
+
+	public enum teleopModes {
+		TELEOP,
+		TEST;
+	}
+
+	public enum motorTests {
+		TEST_ACTUATOR,
+		TEST_LEFT_SHOOTER,
+		TEST_RIGHT_SHOOTER,
+		TEST_DRIVE_LEFT_MASTER,
+		TEST_DRIVE_RIGHT_MASTER,
+		TEST_DRIVE_LEFT_SLAVE,
+		TEST_DRIVE_RIGHT_SLAVE,
+		TEST_NONE;
+	}
 }

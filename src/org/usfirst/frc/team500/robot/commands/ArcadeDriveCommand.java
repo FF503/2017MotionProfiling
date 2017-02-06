@@ -31,11 +31,8 @@ public class ArcadeDriveCommand extends Command {
     	else if (OI.bPressed()){
     		DrivetrainSubsystem.getInstance().forwardsFullVelocity();
     	}
-    	else if (OI.xPressed()){
-    		DrivetrainSubsystem.getInstance().tankDrive(0, 0, false);
-    	}
     	else {
-    		DrivetrainSubsystem.getInstance().arcadeDrive(OI.getLeftYValue(), OI.getLeftXValue(),false);
+    		DrivetrainSubsystem.getInstance().arcadeDrive(OI.getLeftYValue(), OI.getLeftXValue(), false);
     	}
     }
 

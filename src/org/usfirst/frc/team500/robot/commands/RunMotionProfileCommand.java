@@ -1,10 +1,8 @@
 package org.usfirst.frc.team500.robot.commands;
 
 import org.usfirst.frc.team500.robot.Robot;
-import org.usfirst.frc.team500.robot.motionProfile.GeneratedMotionProfile;
 import org.usfirst.frc.team500.robot.motionProfile.PathPlanner;
 import org.usfirst.frc.team500.robot.subsystems.DrivetrainSubsystem;
-import org.usfirst.frc.team500.robot.utils.Constants;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -12,10 +10,10 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class RunMotionProfileCommand extends Command {
-	PathPlanner planner;
+	private PathPlanner planner;
 	public RunMotionProfileCommand(double[][] waypoints, double maxTime) {
     	planner = new PathPlanner(waypoints);
-    	planner.calculate(maxTime, Robot.bot.LOOP_TIME, ((double)Robot.bot.WHEEL_BASE/12));
+    	planner.calculate(maxTime, Robot.bot.CYCLE_TIME, Robot.bot.WHEEL_BASE/12.0);
         requires(DrivetrainSubsystem.getInstance());
     }
 
@@ -35,12 +33,12 @@ public class RunMotionProfileCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	DrivetrainSubsystem.getInstance().getRightMaster().set(0);
-		DrivetrainSubsystem.getInstance().getLeftMaster().set(0);
+    	DrivetrainSubsystem.getInstance().stopTrapezoidControl();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

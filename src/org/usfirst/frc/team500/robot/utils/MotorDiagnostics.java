@@ -1,7 +1,7 @@
 package org.usfirst.frc.team500.robot.utils;
 
-import org.usfirst.frc.team500.robot.utils.Constants.motorTests;
-import org.usfirst.frc.team500.robot.utils.Constants.teleopModes;
+import org.usfirst.frc.team500.robot.utils.SmartDashboardChooser.motorTests;
+import org.usfirst.frc.team500.robot.utils.SmartDashboardChooser.teleopModes;
 
 
 /**
@@ -10,13 +10,9 @@ import org.usfirst.frc.team500.robot.utils.Constants.teleopModes;
 public class MotorDiagnostics {
     static double position, speed;
     public static void testMotors() {
-        teleopModes test = (teleopModes) UI.choosers.modeChooser.getSelected();
+        teleopModes test = (teleopModes) SmartDashboardChooser.getChooser().modeChooser.getSelected();
         if (test == teleopModes.TEST) {
-            motorTests motorToTest;
-
-           // StrongholdRobot.testModeInUse = true;
-
-            motorToTest = (motorTests) SmartDashboardChooser.testMotorChooser.getSelected();
+            motorTests motorToTest = (motorTests) SmartDashboardChooser.getChooser().testChooser.getSelected();
 
             //Get motorToTest id from selected radio button
             switch (motorToTest) {

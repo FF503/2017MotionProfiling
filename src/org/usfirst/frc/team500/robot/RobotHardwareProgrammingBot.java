@@ -10,14 +10,14 @@ public class RobotHardwareProgrammingBot extends RobotHardware {
 	private static CANTalon rightMaster;
 	private static CANTalon rightSlave;
 	
-	public final int leftMasterID = 2;
-	public final int leftSlaveID = 1;
-	public final int rightMasterID = 4;
-	public final int rightSlaveID  = 3;
+	public final int leftMasterID = 2;  //front left
+	public final int leftSlaveID = 1;	//back left
+	public final int rightMasterID = 4;	//front right
+	public final int rightSlaveID  = 3; //back right
 	
 	public final double WHEEL_DIAMETER = 8.0;
 	public final double WHEEL_BASE = 27.0;
-	public final double  LOOP_TIME = 0.05;
+	public final double CYCLE_TIME = 0.05;
 	
 	public final int COUNTS_PER_REV = 360;
 	public final double DRIVE_P = 0;

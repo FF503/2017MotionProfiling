@@ -22,13 +22,12 @@ public class DrivetrainSubsystem extends Subsystem {
    // Put methods for controlling this subsystem
    // here. Call these from Commands.
 	
-	static CANTalon leftMaster, leftSlave, rightMaster, rightSlave;
+	private CANTalon leftMaster, leftSlave, rightMaster, rightSlave;
 	private double talonLeftPos, talonRightPos, talonLeftRPM, talonRightRPM, rightSpeed, leftSpeed;
 	private double curTime, difTime, lastTime;         
-	protected TrapezoidThread trapThread;
+	private TrapezoidThread trapThread;
 	private static int currentProfileID;
 	public boolean profileHasFinished = false;
-	public boolean moveTrapezoidal = true;
 	private boolean firstLogFileRun = true;
   
    public DrivetrainSubsystem() {
@@ -48,11 +47,10 @@ public class DrivetrainSubsystem extends Subsystem {
 		leftMaster.configEncoderCodesPerRev(Robot.bot.COUNTS_PER_REV);
 		rightMaster.configEncoderCodesPerRev(Robot.bot.COUNTS_PER_REV);
 		
-		setPID(Robot.bot.DRIVE_P, Robot.bot.DRIVE_I, Robot.bot.DRIVE_D);
+		setDrivePID(Robot.bot.DRIVE_P, Robot.bot.DRIVE_I, Robot.bot.DRIVE_D);
 		leftMaster.setF(Robot.bot.LEFT_DRIVE_F);
 		rightMaster.setF(Robot.bot.RIGHT_DRIVE_F);
 		
-		//rightMaster.setF(0);
 		leftMaster.reverseOutput(Robot.bot.REVERSE_LEFT_OUTPUT);
 		rightMaster.reverseOutput(Robot.bot.REVERSE_RIGHT_OUTPUT);
 		
@@ -67,36 +65,34 @@ public class DrivetrainSubsystem extends Subsystem {
 	   	trapThread = new TrapezoidThread(leftMaster, rightMaster);	
    }
    
-   public void setPID(double p, double i, double d){
+   public void setDrivePID(double p, double i, double d){
 		leftMaster.setPID(p, i, d);
 		rightMaster.setPID(p, i, d);
    }
    
    private void waitForTrapezoidalFinish() {
 		while(true){
-			String tempString = getTrapStatus();
-			int id = getTrapID();
-			//System.out.println("[Nav} navID "+ currentProfileID +":" + tempString+ " netID:" + id);
-			if(tempString.equals("finished") && (id == currentProfileID)){
-				//currentProfileID++;
+			if(getTrapStatus().equals("finished") && (getTrapID() == currentProfileID)){
 				profileHasFinished = true;
 				break;
 			}
 		}
 		
 	}
+   
    public CANTalon getLeftMaster(){
-   	return leftMaster;
+	   return leftMaster;
    }
+   
    public CANTalon getRightMaster(){
-   	return rightMaster;
+	   return rightMaster;
    }
    
    public void runProfileLeftRight(double[][] leftPoints, double[][] rightPoints){
-   		System.out.println("runPofileLeftRight");
+   		System.out.println("runProfileLeftRight");
    		profileHasFinished = false;
 		currentProfileID++;
-		startTrapezoidControl(leftPoints,rightPoints,currentProfileID);
+		startTrapezoidControl(leftPoints, rightPoints, currentProfileID);
 		waitForTrapezoidalFinish();
 		System.out.println("Time: " + Timer.getFPGATimestamp());		
 	}
@@ -105,14 +101,13 @@ public class DrivetrainSubsystem extends Subsystem {
 		System.out.println("startTrapezoidControl");
 		trapThread.activateTrap(leftPoints, rightPoints, trapID);
 	}
-
 	
 	public void stopTrapezoidControl() {
 		System.out.println("stopTrapezoidControl");
 		trapThread.resetTrapezoid();
 	}
 	
-	public synchronized  int getTrapID(){
+	public synchronized int getTrapID(){
 		return trapThread.getID();
 	}
 
@@ -121,19 +116,19 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
    
    public void percentVoltageMode(){
-   	leftMaster.changeControlMode(TalonControlMode.PercentVbus);
-   	rightMaster.changeControlMode(TalonControlMode.PercentVbus);
-   	//leftSlave.changeControlMode(TalonControlMode.PercentVbus);
-   	//rightSlave.changeControlMode(TalonControlMode.PercentVbus);
+	   leftMaster.changeControlMode(TalonControlMode.PercentVbus);
+	   rightMaster.changeControlMode(TalonControlMode.PercentVbus);
    }
-    public void initDefaultCommand() {
+   
+   public void initDefaultCommand() {
        // Set the default command for a subsystem here.
        //setDefaultCommand(new MySpecialCommand());
    }
+    
     public void resetEncoders(){
-   	 System.out.println("reset encoders");
-   	 leftMaster.setPosition(0);
-		rightMaster.setPosition(0);
+   	 	System.out.println("reset encoders");
+   	 	leftMaster.setEncPosition(0);
+		rightMaster.setEncPosition(0);
 	}
     
 	private static DrivetrainSubsystem instance = new DrivetrainSubsystem();
@@ -142,13 +137,13 @@ public class DrivetrainSubsystem extends Subsystem {
 		return instance;
 	}
 	
-	private static void setMotorOutputs(double leftSpeed, double rightSpeed, boolean sensitivity){
+	private void setMotorOutputs(double leftSpeed, double rightSpeed, boolean sensitivity){
 		if(sensitivity){
 			//leftSpeed = setDriveSensitivity(leftSpeed);
 			//rightSpeed = setDriveSensitivity(rightSpeed);
 		}		
-		leftMaster.set(-leftSpeed);   // front Left 
-		rightMaster.set(rightSpeed);  // front Right 
+		leftMaster.set(-leftSpeed); 
+		rightMaster.set(rightSpeed); 
 	}
 	
 	/*private static double setDriveSensitivity(double input){
@@ -161,21 +156,6 @@ public class DrivetrainSubsystem extends Subsystem {
 		}
 		
 	}*/
-	
-	public void shiftGears(boolean gear){
-		/*
-		SmartDashboard.putString("Drivetrain ShiftGears","True");
-		if(gear){
-			SmartDashboard.putString("Drivetrain Shift to high","True");
-			drivetrainSolenoid.set(true);
-			RobotMap.currentGear = true;
-		}
-		else{
-			SmartDashboard.putString("Drivetrain Shift to high","false");
-			drivetrainSolenoid.set(false);
-			RobotMap.currentGear = false;
-		}*/
-	}
 	
    private static double limit(double num) {
        if (num > 1.0) {

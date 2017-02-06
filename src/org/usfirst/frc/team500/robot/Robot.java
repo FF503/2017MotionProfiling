@@ -4,7 +4,7 @@ package org.usfirst.frc.team500.robot;
 import org.usfirst.frc.team500.robot.commands.ArcadeDriveCommand;
 import org.usfirst.frc.team500.robot.commands.RunMotionProfileCommand;
 import org.usfirst.frc.team500.robot.subsystems.DrivetrainSubsystem;
-import org.usfirst.frc.team500.robot.utils.Constants.diagnosticPOSTOptions;
+import org.usfirst.frc.team500.robot.utils.SmartDashboardChooser.diagnosticPOSTOptions;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -18,11 +18,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
  */
 public class Robot extends IterativeRobot {
 
-	// static final DriveSubsystem drive = new DriveSubsystem();
 	public static RobotHardwareProgrammingBot bot = null;
 	private static double startTime;
-
-   public static diagnosticPOSTOptions diagnosticTestSelected;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -30,9 +27,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-        //NetworkTable.globalDeleteAll(); //Removes unused garbage from SmartDashboard
-		
-		//chooser.addDefault("Default Auto", new ExampleCommand());
 		bot = new RobotHardwareProgrammingBot();
 		bot.initialize();
 		OI.initialize();
@@ -66,19 +60,17 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		//autonomousCommand = chooser.getSelected();
-
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
-
-		// schedule the autonomous command (example)\
 		startTime = Timer.getFPGATimestamp();
-		double[][] centerPinCenterStart = {{0, 13.5},{5, 13.5},{8, 13.5}};
-		double[][] leftPinLeftStart = {{2,21.5},{6,21.5},{10.5,17}};
+		double[][] centerPinCenterStart = {
+				{0, 13.5},
+				{5, 13.5},
+				{8, 13.5}
+		};
+		double[][] leftPinLeftStart = {
+				{2,21.5},
+				{6,21.5},
+				{10.5,17}
+		};
 		(new RunMotionProfileCommand(leftPinLeftStart, 3)).start();
 	}
 
@@ -117,74 +109,8 @@ public class Robot extends IterativeRobot {
 	 * This function is called to initialize the test mode 
 	 */
 	@Override
-	public void testInit(){/*
-		System.out.println("In Roborio Test Mode...initiating Power On Self Test (POST) Diagnostics ...");
+	public void testInit(){
 		
-		diagnosticTestSelected = null;
-		UI.choosers.testInitChoosers();
-
-		while (diagnosticTestSelected == null) {
-			diagnosticTestSelected = (diagnosticPOSTOptions) SmartDashboardChooser.testChooser.getSelected();
-		}
-		
-        switch (diagnosticTestSelected) {
-            case TEST_GYRO:
-                System.out.println("Testing Gyro");
-                break;
-
-            case TEST_ULTRASONIC:
-                System.out.println("Testing Ultrasonic");
-                break;
-
-            case TEST_IR:
-                System.out.println("Testing IR");
-                break;
-
-            case TEST_TALON_LEFT_MASTER:
-                System.out.println("Testing Left Master Talon");
-                break;
-
-            case TEST_TALON_RIGHT_MASTER:
-                System.out.println("Testing Right Master Talon");
-                break;
-
-            case TEST_CHASSIS_DRIVE:
-                System.out.println("Testing the chassis drive");
-                break;
-
-            case TEST_SHOOTER:
-                System.out.println("Testing the shooter");
-                //shooterSubsystem.shoot(StrongholdConstants.FULL_THROTTLE);                
-                break;
-
-            case TEST_GRAPPLER:
-                System.out.println("Testing the grappler");
-             //   grapplerSubsystem.grappleToCastle();
-                break;
-
-            case TEST_ALIGN_TO_CASTLE:
-                break;
-
-            case TEST_LIFTER:
-                System.out.println("Testing the lifter");
-                break;
-    		case TEST_MOTION_PROFILE:
-    			System.out.println("Testing motion profile");
-    			break;
-    		case TEST_GLOBAL_POSITIONING:
-    			System.out.println("Testing global positioning");
-    		//	navigatorSubsystem.driveTo(0, 60);
-    	//		navigatorSubsystem.driveTo(-20, 80);
-    //			navigatorSubsystem.driveTo(0, 0);
-    //			navigatorSubsystem.driveTo(0, 0);
-    //			navigatorSubsystem.driveTo(0, 0);
-    	//		navigatorSubsystem.driveTo(Math.PI/2);
-    			break;
-
-            default:
-                break;
-        }
-*/
 	}
 	
 	/**
@@ -195,40 +121,4 @@ public class Robot extends IterativeRobot {
 		//LiveWindow.run();
 		Scheduler.getInstance().run();
 	}
-	
-
-//    public FireTrapezoid() {
-//        //Declare talons
-//        masterTalon[0] = new CANTalon(StrongholdConstants.TALON_DRIVE_LEFT_MASTER);
-//        masterTalon[1] = new CANTalon(StrongholdConstants.TALON_DRIVE_RIGHT_MASTER);
-
-//        masterTalon[0].reverseOutput(true);
-//        masterTalon[1].reverseOutput(true);
-        
-//        trapThread = new TrapezoidThread(masterTalon[0], masterTalon[1]);
-        
-//        for (int i = 0; i < 2; i++) {
-//        	masterTalon[i].setFeedbackDevice(FeedbackDevice.QuadEncoder);
-//        	masterTalon[i].configEncoderCodesPerRev(2048);
-//        	masterTalon[i].configNominalOutputVoltage(+0.0f, -0.0f);
-//        	masterTalon[i].setPID(StrongholdConstants.OPEN_DRIVE_P, StrongholdConstants.OPEN_DRIVE_I, StrongholdConstants.OPEN_DRIVE_D);
-//        	masterTalon[i].setF(StrongholdConstants.OPEN_DRIVE_F);
-//        }
-
-//        slaveTalon[0] = new CANTalon(StrongholdConstants.TALON_DRIVE_LEFT_SLAVE);
-//        slaveTalon[1] = new CANTalon(StrongholdConstants.TALON_DRIVE_RIGHT_SLAVE);
-        
-//        slaveTalon[0].reverseOutput(false);
-//        slaveTalon[1].reverseOutput(false);
-
-//        slaveTalon[0].changeControlMode(TalonControlMode.Follower);
-//        slaveTalon[1].changeControlMode(TalonControlMode.Follower);
-        
-//        masterTalon[0].setEncPosition(0);
-//        masterTalon[1].setEncPosition(0);
-        
-//        slaveTalon[0].set(StrongholdConstants.TALON_DRIVE_LEFT_MASTER);
-//        slaveTalon[1].set(StrongholdConstants.TALON_DRIVE_RIGHT_MASTER);
-//    }
-
 }

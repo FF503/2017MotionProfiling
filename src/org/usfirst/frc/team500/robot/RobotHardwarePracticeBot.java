@@ -10,21 +10,21 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	private static CANTalon rightMaster;
 	private static CANTalon rightSlave;
 	
-	public final int leftMasterID = 3;
-	public final int leftSlaveID = 1;
-	public final int rightMasterID = 4;
-	public final int rightSlaveID  = 2;
+	public final int leftMasterID = 3; //front left
+	public final int leftSlaveID = 1;	//back left
+	public final int rightMasterID = 4;	//front right
+	public final int rightSlaveID  = 2; //back right
 	
 	public final double WHEEL_DIAMETER = 4.0;
 	public final double WHEEL_BASE = 32.5;
-	public final double  LOOP_TIME = 0.05;
+	public final double CYCLE_TIME = 0.05;
 	
 	public final int COUNTS_PER_REV = 512;
 	public final double DRIVE_P = 0;
 	public final double DRIVE_I = 0;
 	public final double DRIVE_D = 0;
-	public final double LEFT_DRIVE_F = 1;//0.1040480065;
-	public final double RIGHT_DRIVE_F = 1;//0.101528384;
+	public final double LEFT_DRIVE_F = 1; //0.1040480065;
+	public final double RIGHT_DRIVE_F = 1; //0.101528384;
 	
 	public final boolean REVERSE_LEFT_SENSOR = true;
 	public final boolean REVERSE_RIGHT_SENSOR = false;
@@ -60,6 +60,6 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	
 	@Override
 	public String getName(){
-		return "ProgrammingBot";
+		return "PracticeBot";
 	}
 }

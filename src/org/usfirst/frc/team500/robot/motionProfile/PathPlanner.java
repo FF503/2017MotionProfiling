@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.usfirst.frc.team500.robot.Robot;
-import org.usfirst.frc.team500.robot.utils.Constants;
 
 
 
@@ -723,31 +722,28 @@ public class PathPlanner
 	}
 	
 	public double[][]RPMtoEncoderPosition(double[][] rpm){
-		double integral = 0;
+		double integral = 0, sum = 0;
 		double[][] encoderPosition = new double[rpm.length][rpm[1].length];
 		for (int i = 0; i < encoderPosition.length; i ++){
 			encoderPosition[i][0] = rpm[i][0];
-			integral += ((rpm[i][1] * Robot.bot.COUNTS_PER_REV)/(60*(1/Robot.bot.LOOP_TIME)));
-			System.out.println((rpm[i][1] * Robot.bot.COUNTS_PER_REV)/(60*(1/Robot.bot.LOOP_TIME)));
-			encoderPosition[i][1] = integral;
+			integral = rpm[i][1] / 60 * Robot.bot.COUNTS_PER_REV * Robot.bot.CYCLE_TIME;
+			System.out.println(integral);
+			sum+=integral;
+			encoderPosition[i][1] = sum;
 		}
-		return encoderPosition;
-		
+		return encoderPosition;	
 	}
 	
+	//Position, Velocity(RPM), Time(ms)
 	public double[][] mergeToProfile(double[][] velocity, double[][] position){
 		double[][] profile = new double[velocity.length][3];
 		for (int i = 0; i < profile.length; i ++){
 			profile[i][0] = position[i][1];
 			profile[i][1] = velocity[i][1];
-			profile[i][2] = Robot.bot.LOOP_TIME * 1000;
+			profile[i][2] = Robot.bot.CYCLE_TIME * 1000;
 		}
 		return profile;
 	}
-	 
-
-	
-	
 }	
 
 
