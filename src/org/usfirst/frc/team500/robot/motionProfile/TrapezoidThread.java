@@ -32,7 +32,7 @@ public class TrapezoidThread implements Runnable{
 		rightProfile = new MotionProfile(this.rightTalon);
 		
 		trapLoop = new Notifier(this);
-		trapLoop.startPeriodic(0.01);
+		trapLoop.startPeriodic(Robot.bot.CYCLE_TIME);
 	}
 	
 	public void run() {	
