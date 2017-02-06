@@ -11,13 +11,13 @@ public class MotionProfile {
 	private CANTalon talon;
 	private double [][] profilePoints;
 
-	//state machine stuff
-	private int state = 0;
+	//state machine setup	
+        private int state = 0;
 	private int loopTimeout = -1;
 	private CANTalon.SetValueMotionProfile setValue = CANTalon.SetValueMotionProfile.Disable;
 	
 	//used to maintain timing
-	private static final int kMinPointsInTalon = 15;
+	private static final int kMinPointsInTalon = 10;
 	private static final int kNumLoopsTimeout = 10;
 	
 	//nested class for thread which continually pushes points to MPB
