@@ -1,5 +1,7 @@
 package org.usfirst.frc.team500.robot.motionProfile;
 
+import org.usfirst.frc.team500.robot.Robot;
+
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 

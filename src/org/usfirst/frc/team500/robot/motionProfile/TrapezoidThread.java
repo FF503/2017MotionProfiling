@@ -1,10 +1,12 @@
 package org.usfirst.frc.team500.robot.motionProfile;
 
 
+import org.usfirst.frc.team500.robot.Robot;
+
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
+
 import edu.wpi.first.wpilibj.Notifier;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 public class TrapezoidThread implements Runnable{
 

@@ -1,11 +1,11 @@
 package org.usfirst.frc.team500.robot.motionProfile;
 
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.usfirst.frc.team500.robot.Robot;
-
 
 
 /**
@@ -33,8 +33,7 @@ import org.usfirst.frc.team500.robot.Robot;
  * @date 2014-Aug-11
  *
  */
-public class PathPlanner
-{
+public class PathPlanner {
 
 	//Path Variables
 	public double[][] origPath;
@@ -694,6 +693,9 @@ public class PathPlanner
 		rightProfile = mergeToProfile(smoothRightVelocity, smoothRightPosition);
 		leftProfile = mergeToProfile(smoothLeftVelocity, smoothLeftPosition); 
 		
+		LinePlot graph = new LinePlot(smoothCenterVelocity, Color.GREEN, Color.BLACK);
+		graph.addData(smoothLeftVelocity, Color.RED, Color.BLACK);
+		graph.addData(smoothRightVelocity, Color.BLUE, Color.BLACK);
 		System.out.println("right profile" + Arrays.deepToString(rightProfile));
 	}
 	
@@ -727,7 +729,7 @@ public class PathPlanner
 		for (int i = 0; i < encoderPosition.length; i ++){
 			encoderPosition[i][0] = rpm[i][0];
 			integral = rpm[i][1] / 60 * Robot.bot.COUNTS_PER_REV * Robot.bot.CYCLE_TIME;
-			System.out.println(integral);
+			//System.out.println(integral);
 			sum+=integral;
 			encoderPosition[i][1] = sum;
 		}
