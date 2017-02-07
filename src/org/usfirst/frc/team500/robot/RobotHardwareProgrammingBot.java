@@ -17,12 +17,12 @@ public class RobotHardwareProgrammingBot extends RobotHardware {
 	
 	public final double WHEEL_DIAMETER = 8.0;
 	public final double WHEEL_BASE = 27.0;
-	public final double CYCLE_TIME = 0.01;
+	public final double CYCLE_TIME = 0.05;
 	public final int COUNTS_PER_REV = 360;
 	
 	public final double DRIVE_P = 0;
 	public final double DRIVE_I = 0;
-	public final double DRIVE_D = 0;//1.5;
+	public final double DRIVE_D = 0;
 	public final double LEFT_DRIVE_F = 1.50220264;
 	public final double RIGHT_DRIVE_F = 1.51780415;
 	

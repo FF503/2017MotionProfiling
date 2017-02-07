@@ -693,9 +693,9 @@ public class PathPlanner {
 		rightProfile = mergeToProfile(smoothRightVelocity, smoothRightPosition);
 		leftProfile = mergeToProfile(smoothLeftVelocity, smoothLeftPosition); 
 		
-		LinePlot graph = new LinePlot(smoothCenterVelocity, Color.GREEN, Color.BLACK);
+		/*LinePlot graph = new LinePlot(smoothCenterVelocity, Color.GREEN, Color.BLACK);
 		graph.addData(smoothLeftVelocity, Color.RED, Color.BLACK);
-		graph.addData(smoothRightVelocity, Color.BLUE, Color.BLACK);
+		graph.addData(smoothRightVelocity, Color.BLUE, Color.BLACK);*/
 		System.out.println("right profile" + Arrays.deepToString(rightProfile));
 	}
 	
@@ -718,7 +718,7 @@ public class PathPlanner {
 		double[][] rpm  = new double[feetPerSecond.length][feetPerSecond[1].length];
 		for (int i = 0; i < feetPerSecond.length ; i ++ ){
 			rpm[i][0] = feetPerSecond[i][0];
-			rpm[i][1] = (feetPerSecond[i][1] * 60) / (Robot.bot.WHEEL_DIAMETER/12 * Math.PI);
+			rpm[i][1] = (feetPerSecond[i][1] * 60) / (Robot.bot.WHEEL_DIAMETER/12.0 * Math.PI);
 		}
 		return rpm;
 	}
@@ -726,9 +726,10 @@ public class PathPlanner {
 	public double[][]RPMtoEncoderPosition(double[][] rpm){
 		double integral = 0, sum = 0;
 		double[][] encoderPosition = new double[rpm.length][rpm[1].length];
-		for (int i = 0; i < encoderPosition.length; i ++){
+		encoderPosition[0][0] = 0.0;
+		for (int i = 1; i < encoderPosition.length; i ++){
 			encoderPosition[i][0] = rpm[i][0];
-			integral = rpm[i][1] / 60 * Robot.bot.COUNTS_PER_REV * Robot.bot.CYCLE_TIME;
+			integral = (rpm[i][1]+rpm[i-1][1])/2 / 60 * Robot.bot.COUNTS_PER_REV * Robot.bot.CYCLE_TIME;
 			//System.out.println(integral);
 			sum+=integral;
 			encoderPosition[i][1] = sum;
