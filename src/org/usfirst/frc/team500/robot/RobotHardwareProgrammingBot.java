@@ -16,7 +16,7 @@ public class RobotHardwareProgrammingBot extends RobotHardware {
 	public final int rightSlaveID  = 3; //back right
 	
 	public final double WHEEL_DIAMETER = 8.0;
-	public final double WHEEL_BASE = 200;
+	public final double WHEEL_BASE = 26;
 	public final double CYCLE_TIME = 0.05;
 	public final int COUNTS_PER_REV = 360;
 	
@@ -25,6 +25,7 @@ public class RobotHardwareProgrammingBot extends RobotHardware {
 	public final double DRIVE_D = 0;
 	public final double LEFT_DRIVE_F = 1.50220264;
 	public final double RIGHT_DRIVE_F = 1.51780415;
+	public final double CURVE_EXAGGERATION = 7.692;
 	
 	public final boolean REVERSE_LEFT_SENSOR = false;
 	public final boolean REVERSE_RIGHT_SENSOR = true;

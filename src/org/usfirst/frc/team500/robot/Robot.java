@@ -40,9 +40,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledInit() {
 		DrivetrainSubsystem.getInstance().percentVoltageMode();
-		DrivetrainSubsystem.getInstance().getTrapThread().getLeftProfile().reset();
-		DrivetrainSubsystem.getInstance().getTrapThread().getRightProfile().reset();
-	    DrivetrainSubsystem.getInstance().getTrapThread().disableTrap();
+		DrivetrainSubsystem.getInstance().getTrapThread().disableTrap();
+	    DrivetrainSubsystem.getInstance().getTrapThread().resetTrapezoid();
+	    
 		    
 	}
 
@@ -101,11 +101,9 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		DrivetrainSubsystem.getInstance().percentVoltageMode();
     	DrivetrainSubsystem.getInstance().resetEncoders();
-    	startTime = Timer.getFPGATimestamp();
-    	DrivetrainSubsystem.getInstance().getTrapThread().getLeftProfile().reset();
-		DrivetrainSubsystem.getInstance().getTrapThread().getRightProfile().reset();
-	    DrivetrainSubsystem.getInstance().getTrapThread().disableTrap();
-	    
+    	DrivetrainSubsystem.getInstance().getTrapThread().disableTrap();
+	    DrivetrainSubsystem.getInstance().getTrapThread().resetTrapezoid();
+	    startTime = Timer.getFPGATimestamp();
     	(new ArcadeDriveCommand()).start();
     	
 	}
