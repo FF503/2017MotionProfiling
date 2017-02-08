@@ -39,7 +39,11 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-	
+		DrivetrainSubsystem.getInstance().percentVoltageMode();
+		DrivetrainSubsystem.getInstance().getTrapThread().getLeftProfile().reset();
+		DrivetrainSubsystem.getInstance().getTrapThread().getRightProfile().reset();
+	    DrivetrainSubsystem.getInstance().getTrapThread().disableTrap();
+		    
 	}
 
 	@Override
@@ -68,8 +72,8 @@ public class Robot extends IterativeRobot {
 		};
 		double[][] leftPinLeftStart = {
 				{2,21.5},
-				{4,21.5},
-				{10.5,17}
+				{3.5,21.5},
+				{6,16}
 		};
 		double[][] testPoints = {
 				{10,16},
@@ -77,7 +81,7 @@ public class Robot extends IterativeRobot {
 				{17,4},
 				{20,4},
 		};
-		(new RunMotionProfileCommand(leftPinLeftStart, 2)).start();
+		(new RunMotionProfileCommand(leftPinLeftStart, 5)).start();
 	}
 
 	/**
@@ -98,6 +102,10 @@ public class Robot extends IterativeRobot {
 		DrivetrainSubsystem.getInstance().percentVoltageMode();
     	DrivetrainSubsystem.getInstance().resetEncoders();
     	startTime = Timer.getFPGATimestamp();
+    	DrivetrainSubsystem.getInstance().getTrapThread().getLeftProfile().reset();
+		DrivetrainSubsystem.getInstance().getTrapThread().getRightProfile().reset();
+	    DrivetrainSubsystem.getInstance().getTrapThread().disableTrap();
+	    
     	(new ArcadeDriveCommand()).start();
     	
 	}

@@ -1,6 +1,6 @@
 package org.usfirst.frc.team500.robot.motionProfile;
 
-import java.awt.Color;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;

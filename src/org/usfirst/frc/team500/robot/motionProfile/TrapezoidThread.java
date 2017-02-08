@@ -107,6 +107,17 @@ public class TrapezoidThread implements Runnable{
 		return id;
 	}
 	
+	public MotionProfile getLeftProfile(){
+		return leftProfile;
+	}
+	
+	public MotionProfile getRightProfile(){
+		return rightProfile;
+	}
+	
+	public void disableTrap(){
+		startTrap = false;
+	}
 	
 
 }

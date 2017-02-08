@@ -48,6 +48,7 @@ public class DrivetrainSubsystem extends Subsystem {
 		rightMaster.configEncoderCodesPerRev(Robot.bot.COUNTS_PER_REV);
 		
 		setDrivePID(Robot.bot.DRIVE_P, Robot.bot.DRIVE_I, Robot.bot.DRIVE_D);
+		
 		leftMaster.setF(Robot.bot.LEFT_DRIVE_F);
 		rightMaster.setF(Robot.bot.RIGHT_DRIVE_F);
 		
@@ -61,6 +62,8 @@ public class DrivetrainSubsystem extends Subsystem {
 			
 	   	rightMaster.enableBrakeMode(true);
 	   	leftMaster.enableBrakeMode(true);	
+	   	rightSlave.enableBrakeMode(true);
+	   	leftSlave.enableBrakeMode(true);
 	   	    	
 	   	trapThread = new TrapezoidThread(leftMaster, rightMaster);	
    }
@@ -89,6 +92,8 @@ public class DrivetrainSubsystem extends Subsystem {
    }
    
    public void runProfileLeftRight(double[][] leftPoints, double[][] rightPoints){
+	   leftMaster.enableBrakeMode(true);
+	   rightMaster.enableBrakeMode(true);
    		System.out.println("runProfileLeftRight");
    		profileHasFinished = false;
 		currentProfileID++;
@@ -210,6 +215,10 @@ public class DrivetrainSubsystem extends Subsystem {
 
        setMotorOutputs(leftValue, rightValue, sensitivity);
    }    
+   public TrapezoidThread getTrapThread() {
+		return trapThread;
+	}
+   
    
    public void populateLog(double startTime){
    	if (firstLogFileRun){
