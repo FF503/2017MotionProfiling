@@ -20,7 +20,6 @@ public class ArcadeDriveCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	DrivetrainSubsystem.getInstance().stopTrapezoidControl();    	
     }
 
     // Called repeatedly when this Command is scheduled to run

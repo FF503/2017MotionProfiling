@@ -49,7 +49,6 @@ public class TrapezoidThread implements Runnable{
 //			rightTalon.set(rightProfile.getSetValue().value);
 		
 			if((leftProfile.getState() == 3) && (rightProfile.getState() == 3)) {
-					startTrap = false;
 					resetTrapezoid();
 					status = "finished";
 			}
@@ -95,6 +94,7 @@ public class TrapezoidThread implements Runnable{
 	
 	public void resetTrapezoid() {
 		System.out.println("reset trapezoid");
+		startTrap = false;
 		leftProfile.reset();
 		rightProfile.reset();
 	}
@@ -106,18 +106,4 @@ public class TrapezoidThread implements Runnable{
 	public int getID(){
 		return id;
 	}
-	
-	public MotionProfile getLeftProfile(){
-		return leftProfile;
-	}
-	
-	public MotionProfile getRightProfile(){
-		return rightProfile;
-	}
-	
-	public void disableTrap(){
-		startTrap = false;
-	}
-	
-
 }

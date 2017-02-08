@@ -4,7 +4,6 @@ package org.usfirst.frc.team500.robot;
 import org.usfirst.frc.team500.robot.commands.ArcadeDriveCommand;
 import org.usfirst.frc.team500.robot.commands.RunMotionProfileCommand;
 import org.usfirst.frc.team500.robot.subsystems.DrivetrainSubsystem;
-import org.usfirst.frc.team500.robot.utils.SmartDashboardChooser.diagnosticPOSTOptions;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -39,11 +38,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
+    	DrivetrainSubsystem.getInstance().stopTrapezoidControl();    	
 		DrivetrainSubsystem.getInstance().percentVoltageMode();
-		DrivetrainSubsystem.getInstance().getTrapThread().disableTrap();
-	    DrivetrainSubsystem.getInstance().getTrapThread().resetTrapezoid();
-	    
-		    
 	}
 
 	@Override
@@ -99,10 +95,9 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+    	DrivetrainSubsystem.getInstance().stopTrapezoidControl();    	
 		DrivetrainSubsystem.getInstance().percentVoltageMode();
     	DrivetrainSubsystem.getInstance().resetEncoders();
-    	DrivetrainSubsystem.getInstance().getTrapThread().disableTrap();
-	    DrivetrainSubsystem.getInstance().getTrapThread().resetTrapezoid();
 	    startTime = Timer.getFPGATimestamp();
     	(new ArcadeDriveCommand()).start();
     	

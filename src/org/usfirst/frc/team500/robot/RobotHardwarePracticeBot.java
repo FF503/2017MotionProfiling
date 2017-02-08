@@ -17,10 +17,9 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	
 	public final double WHEEL_DIAMETER = 4.0;
 	public final double WHEEL_BASE = 32.5;
-	public final double CURVE_EXAGGERATION = 1;
-	
 	public final double CYCLE_TIME = 0.05;	
 	public final int COUNTS_PER_REV = 512;
+	public final double CURVE_EXAGGERATION = 1;
 	
 	public final double DRIVE_P = 0;
 	public final double DRIVE_I = 0;
