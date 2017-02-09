@@ -38,8 +38,6 @@ public class DrivetrainSubsystem extends Subsystem {
 		rightMaster = Robot.bot.getCANTalonObj(2);
 		rightSlave = Robot.bot.getCANTalonObj(3);
 		
-		leftMaster.reverseSensor(Robot.bot.REVERSE_LEFT_SENSOR);
-		rightMaster.reverseSensor(Robot.bot.REVERSE_RIGHT_SENSOR);
 		
 		leftMaster.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		rightMaster.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
@@ -52,20 +50,37 @@ public class DrivetrainSubsystem extends Subsystem {
 		leftMaster.setF(Robot.bot.LEFT_DRIVE_F);
 		rightMaster.setF(Robot.bot.RIGHT_DRIVE_F);
 		
-		leftMaster.reverseOutput(Robot.bot.REVERSE_LEFT_OUTPUT);
-		rightMaster.reverseOutput(Robot.bot.REVERSE_RIGHT_OUTPUT);
-		
 		leftSlave.changeControlMode(TalonControlMode.Follower);
 	   	rightSlave.changeControlMode(TalonControlMode.Follower);
 	   	leftSlave.set(Robot.bot.leftMasterID);
 	   	rightSlave.set(Robot.bot.rightMasterID);
-			
-	   	rightMaster.enableBrakeMode(true);
-	   	leftMaster.enableBrakeMode(true);	
-	   	rightSlave.enableBrakeMode(true);
-	   	leftSlave.enableBrakeMode(true);
+		
+	   	setDriveDirectionForward();
+	   	setBrakeMode(true);
+	   	
 	   	    	
 	   	trapThread = new TrapezoidThread(leftMaster, rightMaster);	
+   }
+   
+   public void setDriveDirectionForward(){
+	   leftMaster.reverseSensor(Robot.bot.REVERSE_LEFT_SENSOR);
+	   rightMaster.reverseSensor(Robot.bot.REVERSE_RIGHT_SENSOR);
+	   leftMaster.reverseOutput(Robot.bot.REVERSE_LEFT_OUTPUT);
+	   rightMaster.reverseOutput(Robot.bot.REVERSE_RIGHT_OUTPUT);
+   }
+   
+   public void setBrakeMode(boolean value){
+	   rightMaster.enableBrakeMode(value);
+	   leftMaster.enableBrakeMode(value);	
+	   rightSlave.enableBrakeMode(value);
+	   leftSlave.enableBrakeMode(value);
+   }
+   
+   public void setDriveDirectionBackward(){
+	   leftMaster.reverseSensor(!Robot.bot.REVERSE_LEFT_SENSOR);
+	   rightMaster.reverseSensor(!Robot.bot.REVERSE_RIGHT_SENSOR);
+	   leftMaster.reverseOutput(!Robot.bot.REVERSE_LEFT_OUTPUT);
+	   rightMaster.reverseOutput(!Robot.bot.REVERSE_RIGHT_OUTPUT);
    }
    
    public void setDrivePID(double p, double i, double d){

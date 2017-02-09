@@ -66,18 +66,12 @@ public class Robot extends IterativeRobot {
 				{5, 13.5},
 				{8, 13.5}
 		};
-		double[][] leftPinLeftStart = {
-				{2,21.5},
-				{6,21.5},
-				{10.5,17.5}
-		};
 		double[][] testPoints = {
 				{10,16},
 				{11,16},
 				{17,4},
 				{20,4},
 		};
-		(new RunMotionProfileCommand(leftPinLeftStart, 2)).start();
 	}
 
 	/**

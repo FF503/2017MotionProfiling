@@ -1,5 +1,7 @@
 package org.usfirst.frc.team500.auton;
 
+import org.usfirst.frc.team500.robot.subsystems.DrivetrainSubsystem;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -29,9 +31,8 @@ public class LeftPegLeftStartAuton extends CommandGroup {
 				{6,21.5},
 				{10.5,17.5}
 		};
-    	
+    	DrivetrainSubsystem.getInstance().setDriveDirectionBackward();
 		(new RunMotionProfileCommand(leftPinLeftStart, 2)).start();
-		
 		
     }
 }
