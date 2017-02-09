@@ -2,6 +2,8 @@ package org.usfirst.frc.team500.robot;
 
 import com.ctre.CANTalon;
 
+import edu.wpi.first.wpilibj.Solenoid;
+
 
 
 public class RobotHardwareProgrammingBot extends RobotHardware {
@@ -16,12 +18,12 @@ public class RobotHardwareProgrammingBot extends RobotHardware {
 	public final int rightSlaveID  = 3; //back right
 	
 	public final double WHEEL_DIAMETER = 8.0;
-	public final double WHEEL_BASE = 26;
+	public final double WHEEL_BASE = 27;
 	public final double CYCLE_TIME = 0.05;
 	public final int COUNTS_PER_REV = 360;
-	public final double CURVE_EXAGGERATION = 7.692;
+	public final double CURVE_CONSTANT = 3;//7.692;
 
-	public final double DRIVE_P = 0;
+	public final double DRIVE_P = .00001;//.00005
 	public final double DRIVE_I = 0;
 	public final double DRIVE_D = 0;
 	public final double LEFT_DRIVE_F = 1.50220264;

@@ -655,7 +655,7 @@ public class PathPlanner {
 		}
 
 		//calculate left and right path based on center path
-		leftRight(smoothPath, robotTrackWidth * Robot.bot.CURVE_EXAGGERATION);
+		leftRight(smoothPath, robotTrackWidth * Robot.bot.CURVE_CONSTANT);
 
 		origCenterVelocity = velocity(smoothPath, timeStep);
 		origLeftVelocity = velocity(leftPath, timeStep);

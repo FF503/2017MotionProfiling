@@ -1,8 +1,8 @@
 
 package org.usfirst.frc.team500.robot;
 
+import org.usfirst.frc.team500.auton.RunMotionProfileCommand;
 import org.usfirst.frc.team500.robot.commands.ArcadeDriveCommand;
-import org.usfirst.frc.team500.robot.commands.RunMotionProfileCommand;
 import org.usfirst.frc.team500.robot.subsystems.DrivetrainSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -68,8 +68,8 @@ public class Robot extends IterativeRobot {
 		};
 		double[][] leftPinLeftStart = {
 				{2,21.5},
-				{3.5,21.5},
-				{6,16}
+				{6,21.5},
+				{10.5,17.5}
 		};
 		double[][] testPoints = {
 				{10,16},
@@ -77,7 +77,7 @@ public class Robot extends IterativeRobot {
 				{17,4},
 				{20,4},
 		};
-		(new RunMotionProfileCommand(leftPinLeftStart, 5)).start();
+		(new RunMotionProfileCommand(leftPinLeftStart, 2)).start();
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		//DrivetrainSubsystem.getInstance().populateLog(startTime);
+		DrivetrainSubsystem.getInstance().populateLog(startTime);
 		Scheduler.getInstance().run();
 	}
 

@@ -5,6 +5,7 @@ import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.AnalogAccelerometer;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -22,6 +23,7 @@ public abstract class RobotHardware {
 	private RobotHardware dummyBot;
 	private AnalogInput dummyAIO;
 	private AnalogAccelerometer dummyAccel;
+	private Solenoid dummySolenoid;
 	
 
 	public void logSmartDashboard()
@@ -40,6 +42,10 @@ public abstract class RobotHardware {
 	
 	public Spark getSparkObj(int SparkID){
 		return dummySpark;
+	}
+	
+	public Solenoid getSolenoidObject(int solenoidID){
+		return dummySolenoid;
 	}
 	
 	public DigitalInput getDigitalObj (int DigitalID){

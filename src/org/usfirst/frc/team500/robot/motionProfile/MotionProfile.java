@@ -45,7 +45,7 @@ public class MotionProfile {
 	
 	public void reset() {
 		talon.clearMotionProfileTrajectories();
-		setValue = CANTalon.SetValueMotionProfile.Disable;
+		talon.set(CANTalon.SetValueMotionProfile.Disable.value);
 		state = -1;
 		loopTimeout = -1;
 	}

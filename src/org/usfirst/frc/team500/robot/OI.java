@@ -1,6 +1,6 @@
 package org.usfirst.frc.team500.robot;
 
-import org.usfirst.frc.team500.robot.commands.RunMotionProfileCommand;
+import org.usfirst.frc.team500.auton.RunMotionProfileCommand;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;

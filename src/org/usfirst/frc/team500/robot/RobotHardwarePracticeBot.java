@@ -2,6 +2,8 @@ package org.usfirst.frc.team500.robot;
 
 import com.ctre.CANTalon;
 
+import edu.wpi.first.wpilibj.Solenoid;
+
 
 
 public class RobotHardwarePracticeBot extends RobotHardware {
@@ -9,6 +11,9 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	private static CANTalon leftSlave; 
 	private static CANTalon rightMaster;
 	private static CANTalon rightSlave;
+	private static Solenoid driveSolenoid;
+	private static Solenoid outerGearSolenoid;
+	private static Solenoid innerGearSolenoid;
 	
 	public final int leftMasterID = 3; //front left
 	public final int leftSlaveID = 1;	//back left
@@ -19,7 +24,7 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final double WHEEL_BASE = 32.5;
 	public final double CYCLE_TIME = 0.05;	
 	public final int COUNTS_PER_REV = 512;
-	public final double CURVE_EXAGGERATION = 1;
+	public final double CURVE_CONSTANT = 1;
 	
 	public final double DRIVE_P = 0;
 	public final double DRIVE_I = 0;
@@ -32,12 +37,19 @@ public class RobotHardwarePracticeBot extends RobotHardware {
 	public final boolean REVERSE_LEFT_OUTPUT = false;
 	public final boolean REVERSE_RIGHT_OUTPUT = true;
 	
+	public final int driveSolenoidID = 0;
+	public final int outerGearSolenoidID = 1;
+	public final int innerGearSolenoidID = 2;
+	
 	@Override
 	public void initialize(){
 		leftMaster = new CANTalon(leftMasterID);
 		leftSlave = new CANTalon(leftSlaveID);
 		rightMaster = new CANTalon(rightMasterID);
 		rightSlave = new CANTalon(rightSlaveID);
+		driveSolenoid = new Solenoid(driveSolenoidID);
+		outerGearSolenoid = new Solenoid(outerGearSolenoidID);
+		innerGearSolenoid = new Solenoid(innerGearSolenoidID);
 	}
 	
 	@Override

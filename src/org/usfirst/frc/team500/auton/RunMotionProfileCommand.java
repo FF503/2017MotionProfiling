@@ -1,4 +1,4 @@
-package org.usfirst.frc.team500.robot.commands;
+package org.usfirst.frc.team500.auton;
 
 import org.usfirst.frc.team500.robot.Robot;
 import org.usfirst.frc.team500.robot.motionProfile.PathPlanner;

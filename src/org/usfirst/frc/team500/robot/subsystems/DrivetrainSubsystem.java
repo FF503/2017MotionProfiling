@@ -172,13 +172,12 @@ public class DrivetrainSubsystem extends Subsystem {
        	return num;
    }
    
-   public void backwardsFullVelocity(){
+    public void backwardsFullVelocity(){
 		setMotorOutputs(1,1,false);
 	}
 	public void forwardsFullVelocity(){
 		setMotorOutputs(-1,-1,false);
 	}
-	
    	
 	public void arcadeDrive(double moveValue, double rotateValue, boolean sensitivity) {
        double leftMotorSpeed;
