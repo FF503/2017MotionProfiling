@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team500.robot;
 
+import org.usfirst.frc.team500.auton.LeftPegLeftStartAuton;
 import org.usfirst.frc.team500.auton.RunMotionProfileCommand;
 import org.usfirst.frc.team500.robot.commands.ArcadeDriveCommand;
 import org.usfirst.frc.team500.robot.subsystems.DrivetrainSubsystem;
@@ -61,17 +62,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		startTime = Timer.getFPGATimestamp();
-		double[][] centerPinCenterStart = {
-				{0, 13.5},
-				{5, 13.5},
-				{8, 13.5}
-		};
-		double[][] testPoints = {
-				{10,16},
-				{11,16},
-				{17,4},
-				{20,4},
-		};
+		
+		(new LeftPegLeftStartAuton()).start();
 	}
 
 	/**
