@@ -36,28 +36,11 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
 /**
- * This class is a basic plotting class using the Java AWT interface. It has basic features which allow the user 
- * to plot multiple graphs on one figure, control axis dimensions, and specify colors.
- * 
- * This is by all means not an extensive plotter, but it will help visualize data very quickly and accurately. If
- * a more robust plotting function is required, the user is encouraged to use Excel or Matlab. The purpose of this
- * class is to be easy to use with enought automation to have nice graphs with minimal effort, but give the user
- * control over as much as possible, so they can generate the perfect chart.
- * 
- * The plotter also features the ability to capture screen shots directly from the right-click menu, this allows
- * the user to copy and paste plots into reports or other documents rather quickly.
- * 
- * This class holds an interface similar to that of Matlab. 
- * 
- * This class currently only supports scatterd line charts.
- * 
- * @author Kevin Harrilal
- * @email kevin@team2168.org
- * @version 1
- * @date 9 Sept 2014
+ *
+ *Attempt at plotting paths. Doesn't work
  *
  */
- 
+@Deprecated
 public class LinePlot extends JPanel implements ClipboardOwner{
   
     

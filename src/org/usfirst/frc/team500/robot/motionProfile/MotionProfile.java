@@ -7,6 +7,11 @@ import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Notifier;
 
+/****
+ * 
+ * @author Ankith Udupa
+ *
+ */
 public class MotionProfile {
 
 	private CANTalon.MotionProfileStatus status = new CANTalon.MotionProfileStatus();

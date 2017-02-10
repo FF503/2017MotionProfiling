@@ -7,7 +7,7 @@ import org.usfirst.frc.team500.robot.subsystems.DrivetrainSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * @author Ankith Udupa
  */
 public class RunMotionProfileCommand extends Command {
 	private PathPlanner planner;

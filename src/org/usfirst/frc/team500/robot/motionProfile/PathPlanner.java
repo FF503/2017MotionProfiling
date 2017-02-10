@@ -9,28 +9,10 @@ import org.usfirst.frc.team500.robot.Robot;
 
 
 /**
- * This Class provides many useful algorithms for Robot Path Planning. It uses optimization techniques and knowledge
- * of Robot Motion in order to calculate smooth path trajectories, if given only discrete waypoints. The Benefit of these optimization
- * algorithms are very efficient path planning that can be used to Navigate in Real-time.
  * 
- * This Class uses a method of Gradient Decent, and other optimization techniques to produce smooth Velocity profiles
- * for both left and right wheels of a differential drive robot.
+ * @author Ankith Udupa 
  * 
- * This Class does not attempt to calculate quintic or cubic splines for best fitting a curve. It is for this reason, the algorithm can be ran
- * on embedded devices with very quick computation times.
  * 
- * The output of this function are independent velocity profiles for the left and right wheels of a differential drive chassis. The velocity
- * profiles start and end with 0 velocity and maintain smooth transitions throughout the path. 
- * 
- * This algorithm is a port from a similar algorithm running on a Robot used for my PhD thesis. I have not fully optimized
- * these functions, so there is room for some improvement. 
- * 
- * Initial tests on the 2015 FRC NI RoboRio, the complete algorithm finishes in under 15ms using the Java System Timer for paths with less than 50 nodes. 
- * 
- * @author Kevin Harrilal
- * @email kevin@team2168.org
- * @version 1.0
- * @date 2014-Aug-11
  *
  */
 public class PathPlanner {

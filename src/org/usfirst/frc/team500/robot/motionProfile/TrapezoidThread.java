@@ -8,6 +8,12 @@ import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Notifier;
 
+
+/***
+ * 
+ * @author Ankith Udupa
+ *
+ */
 public class TrapezoidThread implements Runnable{
 
 	private CANTalon leftTalon;
