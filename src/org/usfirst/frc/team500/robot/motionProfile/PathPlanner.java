@@ -57,7 +57,7 @@ public class PathPlanner {
 	public double[][] smoothRightPosition;
 	public double[][] smoothLeftPosition;
 
-	//accumulated heading
+	//accumulated heading, 0 is timestep, 1 is degrees 
 	public double[][] heading;
 	
 	//motion profiles

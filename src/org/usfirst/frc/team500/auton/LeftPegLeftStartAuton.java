@@ -31,8 +31,15 @@ public class LeftPegLeftStartAuton extends CommandGroup {
 				{6,21.5},
 				{10.5,17.5}
 		};
+    	double[][] leftPinToHopper = {
+    			{0,0},
+    			{2.29,0},
+    			{7.68,-3.11}
+    	};
     	DrivetrainSubsystem.getInstance().setDriveDirectionBackward();
 		addSequential(new RunMotionProfileCommand(leftPinLeftStart, 2));
+		DrivetrainSubsystem.getInstance().setDriveDirectionForward();
+		addSequential(new RunMotionProfileCommand(leftPinToHopper, 2));
 		
     }
 }

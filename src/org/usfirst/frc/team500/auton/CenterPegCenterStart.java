@@ -28,12 +28,10 @@ public class CenterPegCenterStart extends CommandGroup {
         // arm.
     	double[][] centerPinCenterStart = {
 				{0, 13.5},
-				{5, 13.5},
 				{8, 13.5}
 		};
     	DrivetrainSubsystem.getInstance().setDriveDirectionBackward();
 		addSequential(new RunMotionProfileCommand(centerPinCenterStart, 2));
-		
-		
+		DrivetrainSubsystem.getInstance().setDriveDirectionForward();		
     }
 }
