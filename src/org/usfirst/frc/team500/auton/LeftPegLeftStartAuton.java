@@ -28,18 +28,18 @@ public class LeftPegLeftStartAuton extends CommandGroup {
         // arm.
     	double[][] leftPinLeftStart = {
 				{2,21.5},
-				{6,21.5},
-				{10.5,17.5}
+				{8,21.5},
+				{8.5,23.5}
 		};
     	double[][] leftPinToHopper = {
     			{0,0},
     			{2.29,0},
-    			{7.68,-3.11}
+    			{3,-6}
     	};
-    	DrivetrainSubsystem.getInstance().setDriveDirectionBackward();
-		addSequential(new RunMotionProfileCommand(leftPinLeftStart, 2));
-		DrivetrainSubsystem.getInstance().setDriveDirectionForward();
-		addSequential(new RunMotionProfileCommand(leftPinToHopper, 2));
+    	//DrivetrainSubsystem.getInstance().setDriveDirectionBackward();
+		addSequential(new RunMotionProfileCommand(leftPinLeftStart, 3, true));
+		//DrivetrainSubsystem.getInstance().setDriveDirectionForward();
+		addSequential(new RunMotionProfileCommand(leftPinToHopper, 2, false));
 		
     }
 }

@@ -602,7 +602,7 @@ public class PathPlanner {
 	 * @param timeStep - the frequency at which the robot controller is running on the robot. 
 	 * @param robotTrackWidth - distance between left and right side wheels of a skid steer chassis. Known as the track width.
 	 */
-	public void calculate(double totalTime, double timeStep, double robotTrackWidth)
+	public void calculate(double totalTime, double timeStep, double robotTrackWidth, boolean runReverse)
 	{
 		/**
 		 * pseudo code
@@ -672,8 +672,8 @@ public class PathPlanner {
 		smoothRightPosition = RPMtoEncoderPosition(smoothRightVelocity);
 		smoothLeftPosition = RPMtoEncoderPosition(smoothLeftVelocity);
 		
-		rightProfile = mergeToProfile(smoothRightVelocity, smoothRightPosition);
-		leftProfile = mergeToProfile(smoothLeftVelocity, smoothLeftPosition); 
+		rightProfile = mergeToProfile(smoothRightVelocity, smoothRightPosition, runReverse);
+		leftProfile = mergeToProfile(smoothLeftVelocity, smoothLeftPosition, runReverse); 
 		
 		/*LinePlot graph = new LinePlot(smoothCenterVelocity, Color.GREEN, Color.BLACK);
 		graph.addData(smoothLeftVelocity, Color.RED, Color.BLACK);
@@ -720,11 +720,18 @@ public class PathPlanner {
 	}
 	
 	//Position, Velocity(RPM), Time(ms)
-	public double[][] mergeToProfile(double[][] velocity, double[][] position){
+	public double[][] mergeToProfile(double[][] velocity, double[][] position, boolean runReverse){
 		double[][] profile = new double[velocity.length][3];
 		for (int i = 0; i < profile.length; i ++){
-			profile[i][0] = position[i][1];
-			profile[i][1] = velocity[i][1];
+			if (runReverse){
+				profile[i][0] = -position[i][1];
+				profile[i][1] = -velocity[i][1];
+			}
+			else{
+				profile[i][0] = position[i][1];
+				profile[i][1] = velocity[i][1];
+			}
+			
 			profile[i][2] = Robot.bot.CYCLE_TIME * 1000;
 		}
 		return profile;
