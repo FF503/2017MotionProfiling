@@ -33,7 +33,7 @@ public class CenterPegCenterStart extends CommandGroup {
     	
     //	DrivetrainSubsystem.getInstance().setDriveDirectionBackward();
     	
-		addSequential(new RunMotionProfileCommand(centerPinCenterStart, 2, true));
+		addSequential(new RunMotionProfileCommand(centerPinCenterStart, 2, 1, true));
 		System.out.println("finished auton");
 		DrivetrainSubsystem.getInstance().setDriveDirectionForward();		
     }

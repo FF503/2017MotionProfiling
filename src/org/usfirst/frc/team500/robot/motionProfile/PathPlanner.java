@@ -602,7 +602,7 @@ public class PathPlanner {
 	 * @param timeStep - the frequency at which the robot controller is running on the robot. 
 	 * @param robotTrackWidth - distance between left and right side wheels of a skid steer chassis. Known as the track width.
 	 */
-	public void calculate(double totalTime, double timeStep, double robotTrackWidth, boolean runReverse)
+	public void calculate(double totalTime, double timeStep, double robotTrackWidth, double curveExageration, boolean runReverse)
 	{
 		/**
 		 * pseudo code
@@ -637,7 +637,7 @@ public class PathPlanner {
 		}
 
 		//calculate left and right path based on center path
-		leftRight(smoothPath, robotTrackWidth * Robot.bot.CURVE_CONSTANT);
+		leftRight(smoothPath, robotTrackWidth * curveExageration);
 
 		origCenterVelocity = velocity(smoothPath, timeStep);
 		origLeftVelocity = velocity(leftPath, timeStep);

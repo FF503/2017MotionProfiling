@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class RunMotionProfileCommand extends Command {
 	private PathPlanner planner;
-	public RunMotionProfileCommand(double[][] waypoints, double maxTime, boolean runReverse) {
+	public RunMotionProfileCommand(double[][] waypoints, double maxTime, double curveExageration, boolean runReverse) {
     	planner = new PathPlanner(waypoints);
-    	planner.calculate(maxTime, Robot.bot.CYCLE_TIME, Robot.bot.WHEEL_BASE/12.0, runReverse);
+    	planner.calculate(maxTime, Robot.bot.CYCLE_TIME, Robot.bot.WHEEL_BASE/12.0, curveExageration, runReverse);
         requires(DrivetrainSubsystem.getInstance());
     }
 

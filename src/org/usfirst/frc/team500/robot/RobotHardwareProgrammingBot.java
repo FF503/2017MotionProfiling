@@ -21,7 +21,7 @@ public class RobotHardwareProgrammingBot extends RobotHardware {
 	public final double WHEEL_BASE = 27;
 	public final double CYCLE_TIME = 0.05;
 	public final int COUNTS_PER_REV = 360;
-	public final double CURVE_CONSTANT = 3;//7.692;
+	//public final double CURVE_CONSTANT = 3;//7.692;
 
 	public final double DRIVE_P = .00001;//.00005
 	public final double DRIVE_I = 0;

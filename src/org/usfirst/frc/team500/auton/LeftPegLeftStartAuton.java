@@ -37,9 +37,9 @@ public class LeftPegLeftStartAuton extends CommandGroup {
     			{3,-6}
     	};
     	//DrivetrainSubsystem.getInstance().setDriveDirectionBackward();
-		addSequential(new RunMotionProfileCommand(leftPinLeftStart, 3, true));
+		addSequential(new RunMotionProfileCommand(leftPinLeftStart, 3, 3, true));
 		//DrivetrainSubsystem.getInstance().setDriveDirectionForward();
-		addSequential(new RunMotionProfileCommand(leftPinToHopper, 2, false));
+		addSequential(new RunMotionProfileCommand(leftPinToHopper, 2, 3,false));
 		
     }
 }
