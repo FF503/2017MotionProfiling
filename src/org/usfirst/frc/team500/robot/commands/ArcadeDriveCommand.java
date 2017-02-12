@@ -7,9 +7,6 @@ import org.usfirst.frc.team500.robot.subsystems.DrivetrainSubsystem;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class ArcadeDriveCommand extends Command {
 
     public ArcadeDriveCommand() {

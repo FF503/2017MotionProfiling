@@ -8,12 +8,6 @@ import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Notifier;
 
-
-/***
- * 
- * @author Ankith Udupa
- *
- */
 public class TrapezoidThread implements Runnable{
 
 	private CANTalon leftTalon;
@@ -45,14 +39,9 @@ public class TrapezoidThread implements Runnable{
 	
 	public void run() {	
 		if(startTrap) {
-			//	System.out.println("trapezoidthread: run");
 
 			leftProfile.control();
 			rightProfile.control();
-			
-			//inside control loop
-//			leftTalon.set(leftProfile.getSetValue().value);
-//			rightTalon.set(rightProfile.getSetValue().value);
 		
 			if((leftProfile.getState() == 3) && (rightProfile.getState() == 3)) {
 					resetTrapezoid();
@@ -74,8 +63,8 @@ public class TrapezoidThread implements Runnable{
 		
 		status = "initialized";
 		
-		resetTrapezoid();
 		initializeTalons();		
+		resetTrapezoid();
 		setProfiles();
 	
 		leftProfile.startMotionProfile();

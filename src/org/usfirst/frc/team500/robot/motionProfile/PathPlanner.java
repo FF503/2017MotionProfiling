@@ -8,13 +8,6 @@ import java.util.List;
 import org.usfirst.frc.team500.robot.Robot;
 
 
-/**
- * 
- * @author Ankith Udupa 
- * 
- * 
- *
- */
 public class PathPlanner {
 
 	//Path Variables
