@@ -9,6 +9,7 @@ import org.usfirst.frc.team500.robot.subsystems.DrivetrainSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -21,6 +22,7 @@ public class Robot extends IterativeRobot {
 
 	public static RobotHardwareProgrammingBot bot = null;
 	private static double startTime;
+	private static Command autonCommand;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -42,6 +44,7 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
     	DrivetrainSubsystem.getInstance().stopTrapezoidControl();    	
 		DrivetrainSubsystem.getInstance().percentVoltageMode();
+		autonCommand.cancel();
 	}
 
 	@Override
@@ -49,25 +52,12 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 	}
 
-	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString code to get the auto name from the text box below the Gyro
-	 *
-	 * You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons
-	 * to the switch structure below with additional strings & commands.
-	 */
+
 	@Override
 	public void autonomousInit() {
 		startTime = Timer.getFPGATimestamp();
-		double[][] centerPinCenterStart = {
-				{0, 13.5},
-				{7.5, 13.5}
-		};
-		(new LeftPegLeftStartAuton()).start();
+		autonCommand = new LeftPegLeftStartAuton();
+		autonCommand.start();
 		//(new RunMotionProfileCommand(centerPinCenterStart, 3)).start();
 	}
 
