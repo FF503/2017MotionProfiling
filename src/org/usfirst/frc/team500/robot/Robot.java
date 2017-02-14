@@ -22,7 +22,7 @@ public class Robot extends IterativeRobot {
 
 	public static RobotHardwareProgrammingBot bot = null;
 	private static double startTime;
-	private static Command autonCommand;
+	private static Command autonCommand = new Command();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -42,8 +42,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-    	DrivetrainSubsystem.getInstance().stopTrapezoidControl();    	
+		DrivetrainSubsystem.getInstance().stopTrapezoidControl();    	
 		DrivetrainSubsystem.getInstance().percentVoltageMode();
+		autonCommand.cancel();
 	}
 
 	@Override
@@ -57,7 +58,7 @@ public class Robot extends IterativeRobot {
 		startTime = Timer.getFPGATimestamp();
 		autonCommand = new LeftPegLeftStartAuton();
 		autonCommand.start();
-		//(new RunMotionProfileCommand(centerPinCenterStart, 3)).start();
+		
 	}
 
 	/**
