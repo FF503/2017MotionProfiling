@@ -48,7 +48,11 @@ public class DrivetrainSubsystem extends Subsystem {
 	   	leftSlave.set(Robot.bot.leftMasterID);
 	   	rightSlave.set(Robot.bot.rightMasterID);
 		
-	   	setDriveDirectionForward();
+	   	leftMaster.reverseOutput(Robot.bot.REVERSE_LEFT_OUTPUT);
+	   	rightMaster.reverseOutput(Robot.bot.REVERSE_RIGHT_OUTPUT);
+	   	leftSlave.reverseSensor(Robot.bot.REVERSE_LEFT_SENSOR);
+	   	rightSlave.reverseSensor(Robot.bot.REVERSE_RIGHT_OUTPUT);
+	   	
 	   	setBrakeMode(true);
 	   	
 	   	    	

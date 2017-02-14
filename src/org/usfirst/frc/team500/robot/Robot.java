@@ -44,7 +44,6 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
     	DrivetrainSubsystem.getInstance().stopTrapezoidControl();    	
 		DrivetrainSubsystem.getInstance().percentVoltageMode();
-		autonCommand.cancel();
 	}
 
 	@Override
